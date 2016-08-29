@@ -21,6 +21,7 @@ public class Game2 extends Activity implements View.OnClickListener {
     Button a1,a2,a3,b1,b2,b3,c1,c2,c3,newgame;
     Button[] barray;
     Boolean turn = true;   // X= true  O=false
+    Boolean match = true;
     int turnCount = 0;
     Boolean there_is_a_winner = false;
     int xscore=0,yscore=0;
@@ -55,14 +56,25 @@ public class Game2 extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 enableDisableAllButtons(true);
-                turn = true;
+
+                if(match){
+                    turn = false;
+                }else{
+                    turn = true;
+                }
+                match = !match;
                 turnCount = 0;
                 there_is_a_winner=false;
 
 
                 TextView t;
                 t = (TextView) findViewById(R.id.whoseTurn);
-                t.setText(name1+"'s Turn");
+                if(match){
+                    t.setText(name1+"'s Turn");
+                }else {
+                    t.setText(name2+"'s Turn");
+                }
+
 
                 TextView r;
                 r= (TextView) findViewById(R.id.ng);
@@ -98,11 +110,19 @@ public class Game2 extends Activity implements View.OnClickListener {
 
         if(turn){  // X's turn
             b.setText("X");
-            updateWhoseTurn(name2);
+            if(!match){
+                updateWhoseTurn(name2);
+            }else{
+                updateWhoseTurn(name1);
+            }
         }
         else{   // Y's turn
             b.setText("O");
-            updateWhoseTurn(name1);
+            if(!match){
+                updateWhoseTurn(name1);
+            }else{
+                updateWhoseTurn(name2);
+            }
         }
         turnCount++;
         b.setClickable(false);
@@ -178,7 +198,7 @@ public class Game2 extends Activity implements View.OnClickListener {
     private void updateScorey(int y){
         TextView t;
         t = (TextView) findViewById(R.id.scorey);
-        String s = "Y : ";
+        String s = "O : ";
         s = s + y;
         t.setText(s);
     }
