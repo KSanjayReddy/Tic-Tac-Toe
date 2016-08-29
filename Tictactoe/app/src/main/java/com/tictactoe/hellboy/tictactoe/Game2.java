@@ -78,8 +78,6 @@ public class Game2 extends Activity implements View.OnClickListener {
         for(Button b : barray){
             // means for every button in barray
 
-            final MediaPlayer mm = MediaPlayer.create(Game2.this,R.raw.click);
-            mm.start();
 
             b.setOnClickListener(this);
         }
@@ -89,6 +87,8 @@ public class Game2 extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         // Toast.makeText(Game2.this, "button clicked",Toast.LENGTH_SHORT).show();
+        final MediaPlayer mm = MediaPlayer.create(Game2.this,R.raw.click);
+        mm.start();
        Button b = (Button) v;
         buttonClicked(b);
 
