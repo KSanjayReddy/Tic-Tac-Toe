@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                m.pause();
                 finishAffinity();
             }
         });
@@ -58,6 +59,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this,Rules.class);
+                m.pause();
                 startActivity(i);
             }
         });
