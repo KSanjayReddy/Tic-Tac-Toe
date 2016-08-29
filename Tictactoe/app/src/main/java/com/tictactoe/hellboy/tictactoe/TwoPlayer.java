@@ -13,61 +13,69 @@ import android.widget.TextView;
 
 public class TwoPlayer extends Activity {
 
-    Button b1,b2,b3;
-    String n1,n2;
-    TextView t1,t2;
+    Button b;
+    String n1, n2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_player);
 
-        t1 = (TextView) findViewById(R.id.name1);
-        t2 = (TextView) findViewById(R.id.name2);
+        b = (Button) findViewById(R.id.gotog) ;
 
-        b1 = (Button) findViewById(R.id.button1);
-        b2 = (Button) findViewById(R.id.button2);
-        b3  = (Button) findViewById(R.id.gotog) ;
 
-        b1.setOnClickListener(new View.OnClickListener() {
+
+
+        b.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                MediaPlayer m = MediaPlayer.create(TwoPlayer.this,R.raw.click);
+
+                EditText e1, e2;
+                e1 = (EditText) findViewById(R.id.edit1);
+                e2 = (EditText) findViewById(R.id.edit2);
+
+
+                MediaPlayer m = MediaPlayer.create(TwoPlayer.this, R.raw.click);
                 m.start();
+                n1 = e1.getText().toString();
+                n2 = e2.getText().toString();
+                Intent i = new Intent(TwoPlayer.this, Game2.class);
 
-                EditText e;
-                e = (EditText) findViewById(R.id.edit1);
-                n1 = e.getText().toString();
-                t1.setText(n1+" ( X )");
-                e.setHintTextColor(Color.parseColor("#ffffff"));
+                if(n1.length()==0){
+                    n1= "Player 1";
+                }
+                if(n2.length()==0){
+                    n2= "Player 2";
+                }
 
-            }
-        });
+                i.putExtra("Name1", n1);
+                i.putExtra("Name2", n2);
 
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MediaPlayer m = MediaPlayer.create(TwoPlayer.this,R.raw.click);
-                m.start();
-                EditText e;
-                e = (EditText) findViewById(R.id.edit2);
-                n2 = e.getText().toString();
-                t2.setText(n2+" ( O )");
-                e.setHintTextColor(Color.parseColor("#ffffff"));
-
-            }
-        });
-
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MediaPlayer m = MediaPlayer.create(TwoPlayer.this,R.raw.click);
-                m.start();
-                Intent i = new Intent(TwoPlayer.this,Game2.class);
-                i.putExtra("Name1",n1);
-                i.putExtra("Name2",n2);
                 startActivity(i);
+
+
             }
         });
     }
 }
+
+//        b3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(n1 != null && n1 != ""){
+//                    i.putExtra("Name1",n1);
+//                }else{
+//                    i.putExtra("Name!","Player1");
+//                }
+//
+//                if(n2 != null && n2 != ""){
+//                    i.putExtra("Name2",n2);
+//                }else {
+//                    i.putExtra("Name2","Player2");
+//                }
+//                startActivity(i);
+//            }
+//        });
+
+

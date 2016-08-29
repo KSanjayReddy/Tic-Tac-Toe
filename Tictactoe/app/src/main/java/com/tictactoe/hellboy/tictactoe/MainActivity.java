@@ -1,9 +1,10 @@
 package com.tictactoe.hellboy.tictactoe;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,15 +12,16 @@ import android.widget.Button;
 public class MainActivity extends Activity {
 
     Button twoButton,exitButton,oneButton;
+    MediaPlayer m = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final MediaPlayer m = MediaPlayer.create(MainActivity.this,R.raw.backm);
+        m = MediaPlayer.create(MainActivity.this, R.raw.backm);
         m.start();
-        m.setVolume(0.5f,0.5f);
+        m.setVolume(0.5f, 0.5f);
 
 
         //MediaPlayer m = MediaPlayer.create(MainActivity.this,R.raw.track);
@@ -29,7 +31,7 @@ public class MainActivity extends Activity {
         twoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,TwoPlayer.class);
+                Intent i = new Intent(MainActivity.this, TwoPlayer.class);
                 m.pause();
                 startActivity(i);
             }
@@ -40,7 +42,24 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 m.pause();
-                finishAffinity();
+                //finishAffinity();
+
+
+
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Tic Tac Toe")
+                            .setMessage("Are you sure you want to quit the game?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finishAffinity();
+                                }
+
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+
             }
         });
 
@@ -58,11 +77,32 @@ public class MainActivity extends Activity {
         r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,Rules.class);
+                Intent i = new Intent(MainActivity.this, Rules.class);
                 m.pause();
                 startActivity(i);
             }
         });
-
     }
+
+        @Override
+        public void onBackPressed() {
+            m.pause();
+
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.wall)
+                    .setTitle("Tic Tac Toe")
+                    .setMessage("Are you sure you want to quit the game?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finishAffinity();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+
+
 }

@@ -5,112 +5,44 @@
     android:layout_height="match_parent"
     android:background="@drawable/wall"
     android:orientation="vertical"
+    android:paddingTop="30dp"
     tools:context="com.tictactoe.hellboy.tictactoe.TwoPlayer">
 
-    <LinearLayout
-        android:layout_weight="1"
+    <EditText
+        android:id="@+id/edit1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#000000" 
+        android:maxLength="10"
+        android:hint="Player 1 Name"
+        android:textSize="20sp"/>
 
-        <TextView
-            android:id="@+id/name1"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Player 1 ( X )"
-            android:elegantTextHeight="false"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:textStyle="bold|italic"
-            android:textSize="40sp" />
-        <EditText
-            android:id="@+id/edit1"
-            android:maxLength="8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#32CD32"
-            android:breakStrategy="high_quality"
-            android:textColorHint="#ff0000"
-            android:gravity="center"
-            android:hint="Enter Here"
-            android:textColor="#ff0000"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp" />
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ready"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:background="#32CD32"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_weight="1"
+    <EditText
+        android:id="@+id/edit2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/name2"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Player 2 ( 0 )"
-            android:elegantTextHeight="false"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:textStyle="bold|italic"
-            android:textSize="40sp" />
-        <EditText
-            android:id="@+id/edit2"
-            android:maxLength="8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#32CD32"
-            android:breakStrategy="high_quality"
-            android:textColorHint="#ff0000"
-            android:gravity="center"
-            android:hint="Enter Here"
-            android:textColor="#ff0000"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ready"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:background="#32CD32"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right" />
-
-        <Button
-            android:background="#32CD32"
-            android:padding="5dp"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go to Game"
-            android:id="@+id/gotog" />
-
-
-    </LinearLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:maxLength="10"
+        android:hint="Player 2 Name"
+        android:textSize="20sp"/>
+    
+    <Button
+        android:id="@+id/gotog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#151515"
+        android:layout_gravity="center"
+        android:text="Go to Game"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:padding="10dp"/>
 
 
 </LinearLayout>

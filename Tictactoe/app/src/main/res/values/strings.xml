@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tictactoe</string>
+    <string name="algo"></string>
+    <string name="his"></string>
 </resources>

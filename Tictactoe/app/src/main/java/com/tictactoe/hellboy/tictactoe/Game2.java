@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +20,8 @@ public class Game2 extends Activity implements View.OnClickListener {
     Button a1,a2,a3,b1,b2,b3,c1,c2,c3,newgame;
     Button[] barray;
     Boolean turn = true;   // X= true  O=false
-    Boolean match = true;
+    //Boolean match = true;
+    int match = 1;
     int turnCount = 0;
     Boolean there_is_a_winner = false;
     int xscore=0,yscore=0;
@@ -35,6 +35,15 @@ public class Game2 extends Activity implements View.OnClickListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
+
+        TextView tmp;
+        tmp = (TextView) findViewById(R.id.namex);
+        tmp.setText(name1);
+
+        TextView x;
+        x = (TextView) findViewById(R.id.namey);
+        x.setText(name2);
+
 
         TextView t;
         t = (TextView) findViewById(R.id.whoseTurn);
@@ -57,23 +66,26 @@ public class Game2 extends Activity implements View.OnClickListener {
             public void onClick(View view) {
                 enableDisableAllButtons(true);
 
-                if(match){
+                match ++;
+                if(match % 2 ==0){
                     turn = false;
                 }else{
                     turn = true;
                 }
-                match = !match;
+
                 turnCount = 0;
                 there_is_a_winner=false;
 
 
                 TextView t;
                 t = (TextView) findViewById(R.id.whoseTurn);
-                if(match){
+                if(turn){
                     t.setText(name1+"'s Turn");
                 }else {
                     t.setText(name2+"'s Turn");
                 }
+
+
 
 
                 TextView r;
@@ -110,19 +122,21 @@ public class Game2 extends Activity implements View.OnClickListener {
 
         if(turn){  // X's turn
             b.setText("X");
-            if(!match){
-                updateWhoseTurn(name2);
-            }else{
+            if(match %2 ==0){
                 updateWhoseTurn(name1);
+            }else{
+                updateWhoseTurn(name2);
             }
+            updateWhoseTurn(name2);
         }
         else{   // Y's turn
             b.setText("O");
-            if(!match){
-                updateWhoseTurn(name1);
-            }else{
+            if(match %2 == 0){
                 updateWhoseTurn(name2);
+            }else{
+                updateWhoseTurn(name1);
             }
+            updateWhoseTurn(name1);
         }
         turnCount++;
         b.setClickable(false);
@@ -137,7 +151,7 @@ public class Game2 extends Activity implements View.OnClickListener {
             there_is_a_winner = true;
         if(b1.getText()==b2.getText() && b2.getText()==b3.getText() && !b1.isClickable())
             there_is_a_winner = true;
-        if(b1.getText()==b2.getText() && b2.getText()==b3.getText() && !b1.isClickable())
+        if(c1.getText()==c2.getText() && c2.getText()==c3.getText() && !c1.isClickable())
             there_is_a_winner = true;
 
         // check for verticals
@@ -190,17 +204,15 @@ public class Game2 extends Activity implements View.OnClickListener {
     private void updateScorex(int x){
         TextView t;
         t = (TextView) findViewById(R.id.scorex);
-        String s = "X : ";
-        s = s + x;
-        t.setText(s);
+        String s="";
+        t.setText(s+x);
     }
 
     private void updateScorey(int y){
         TextView t;
         t = (TextView) findViewById(R.id.scorey);
-        String s = "O : ";
-        s = s + y;
-        t.setText(s);
+        String s = "";;
+        t.setText(s+y);
     }
 
     private void updateWhoseTurn(String ss){
@@ -221,7 +233,7 @@ public class Game2 extends Activity implements View.OnClickListener {
             t.setTypeface(null, Typeface.BOLD);
         }
         else{
-            t.setText("MAtch Drawn");
+            t.setText("Match Drawn");
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
         }

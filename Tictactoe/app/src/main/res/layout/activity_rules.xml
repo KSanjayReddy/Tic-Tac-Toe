@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -57,8 +61,42 @@
         android:gravity="left"
         android:textColor="#000000"
         />
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="History"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textStyle="bold"/>
+    <TextView
+        android:text="An early variant of tic-tac-toe was played in the Roman Empire, around the first century BC. It was called Terni Lapilli and instead of having any number of pieces, each player only had three, thus they had to move them around to empty spaces to keep playing. The game's grid markings have been found chalked all over Rome. However, according to Claudia Zaslavskys book Tic Tac Toe: And Other Three-In-A Row Games from Ancient Egypt to the Modern Computer, Tic-tac-toe could originate back to ancient Egypt."
+         android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:textColor="#000000"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minimax Algo"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minimax (sometimes MinMax or MM) is a decision rule used in decision theory, game theory, statistics and philosophy for minimizing the possible loss for a worst case (maximum loss) scenario. Originally formulated for two-player zero-sum game theory, covering both the cases where players take alternate moves and those where they make simultaneous moves, it has also been extended to more complex games and to general decision-making in the presence of uncertainty."
+        android:textSize="20sp"
+        android:gravity="left"
+        android:textColor="#000000"
+        />
 
 
 </LinearLayout>
+</ScrollView>
+

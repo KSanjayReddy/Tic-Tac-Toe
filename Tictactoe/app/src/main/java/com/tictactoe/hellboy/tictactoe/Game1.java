@@ -179,7 +179,7 @@ public class Game1 extends Activity implements View.OnClickListener {
             there_is_a_winner = true;
         if(b1.getText()==b2.getText() && b2.getText()==b3.getText() && !b1.isClickable())
             there_is_a_winner = true;
-        if(b1.getText()==b2.getText() && b2.getText()==b3.getText() && !b1.isClickable())
+        if(c1.getText()==c2.getText() && c2.getText()==c3.getText() && !c1.isClickable())
             there_is_a_winner = true;
 
         // check for verticals
@@ -208,7 +208,7 @@ public class Game1 extends Activity implements View.OnClickListener {
             else{
                 //Toast.makeText(Game2.this, "O won",Toast.LENGTH_SHORT).show();
                 yscore++;
-                displayResult("COM");
+                displayResult("L");
                 //updateScorey(yscore);
             }
 
@@ -234,14 +234,19 @@ public class Game1 extends Activity implements View.OnClickListener {
     private void displayResult(String ss){
         TextView t,r;
         t = (TextView) findViewById(R.id.whoseTurn);
-        if(ss != "D"){
+        if(ss != "D" && ss!="L"){
             String s = ss + " WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
+        }else if(ss== "L"){
+            String s = "YOU LOSE";
+            t.setText(s);
+            t.setTextColor(Color.parseColor("#ee0000"));
+            t.setTypeface(null, Typeface.BOLD);
         }
         else{
-            t.setText("MAtch Drawn");
+            t.setText("Match Drawn");
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
         }
