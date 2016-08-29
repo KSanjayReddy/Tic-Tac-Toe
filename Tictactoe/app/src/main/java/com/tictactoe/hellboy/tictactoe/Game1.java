@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,7 @@ public class Game1 extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game1);
+
 
 //
 //        TextView wt ;
@@ -54,6 +56,9 @@ public class Game1 extends Activity implements View.OnClickListener {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    final MediaPlayer mm = MediaPlayer.create(Game1.this,R.raw.click);
+                    mm.start();
 
                     Button tmp = (Button)view;
                     tmp.setText("X");

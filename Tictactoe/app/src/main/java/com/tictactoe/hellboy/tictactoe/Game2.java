@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -76,6 +77,10 @@ public class Game2 extends Activity implements View.OnClickListener {
 
         for(Button b : barray){
             // means for every button in barray
+
+            final MediaPlayer mm = MediaPlayer.create(Game2.this,R.raw.click);
+            mm.start();
+
             b.setOnClickListener(this);
         }
 

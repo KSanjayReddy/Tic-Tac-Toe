@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@drawable/wall"
     android:orientation="vertical"
     tools:context="com.tictactoe.hellboy.tictactoe.TwoPlayer">
 
@@ -21,20 +21,20 @@
             android:text="Player 1 ( X )"
             android:elegantTextHeight="false"
             android:gravity="center"
-            android:textColor="#ff0000"
+            android:textColor="#000000"
             android:textStyle="bold|italic"
             android:textSize="40sp" />
         <EditText
             android:id="@+id/edit1"
+            android:maxLength="8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#e20909"
+            android:backgroundTint="#32CD32"
             android:breakStrategy="high_quality"
             android:textColorHint="#ff0000"
             android:gravity="center"
             android:hint="Enter Here"
             android:textColor="#ff0000"
-            android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="20dp" />
         <Button
@@ -45,7 +45,7 @@
             android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:background="#00ff00"
+            android:background="#32CD32"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="right" />
@@ -67,20 +67,20 @@
             android:text="Player 2 ( 0 )"
             android:elegantTextHeight="false"
             android:gravity="center"
-            android:textColor="#ff0000"
+            android:textColor="#000000"
             android:textStyle="bold|italic"
             android:textSize="40sp" />
         <EditText
             android:id="@+id/edit2"
+            android:maxLength="8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#e20909"
+            android:backgroundTint="#32CD32"
             android:breakStrategy="high_quality"
             android:textColorHint="#ff0000"
             android:gravity="center"
             android:hint="Enter Here"
             android:textColor="#ff0000"
-            android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="20dp" />
 
@@ -92,13 +92,13 @@
             android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:background="#00ff00"
+            android:background="#32CD32"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="right" />
 
         <Button
-            android:background="#00ff00"
+            android:background="#32CD32"
             android:padding="5dp"
             android:textColor="#000000"
             android:textStyle="bold"

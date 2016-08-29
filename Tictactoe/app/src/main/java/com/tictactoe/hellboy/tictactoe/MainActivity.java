@@ -17,6 +17,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final MediaPlayer m = MediaPlayer.create(MainActivity.this,R.raw.backm);
+        m.start();
+        m.setVolume(0.5f,0.5f);
+
+
         //MediaPlayer m = MediaPlayer.create(MainActivity.this,R.raw.track);
         //m.start();
 
@@ -25,6 +30,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this,TwoPlayer.class);
+                m.pause();
                 startActivity(i);
             }
         });
@@ -42,6 +48,16 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, Game1.class);
+                m.pause();
+                startActivity(i);
+            }
+        });
+
+        Button r = (Button) findViewById(R.id.rules_id);
+        r.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this,Rules.class);
                 startActivity(i);
             }
         });

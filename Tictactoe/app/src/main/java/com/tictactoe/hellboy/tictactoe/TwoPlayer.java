@@ -2,6 +2,8 @@ package com.tictactoe.hellboy.tictactoe;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,20 +32,28 @@ public class TwoPlayer extends Activity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MediaPlayer m = MediaPlayer.create(TwoPlayer.this,R.raw.click);
+                m.start();
+
                 EditText e;
                 e = (EditText) findViewById(R.id.edit1);
                 n1 = e.getText().toString();
                 t1.setText(n1+" ( X )");
+                e.setHintTextColor(Color.parseColor("#ffffff"));
+
             }
         });
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MediaPlayer m = MediaPlayer.create(TwoPlayer.this,R.raw.click);
+                m.start();
                 EditText e;
                 e = (EditText) findViewById(R.id.edit2);
                 n2 = e.getText().toString();
                 t2.setText(n2+" ( O )");
+                e.setHintTextColor(Color.parseColor("#ffffff"));
 
             }
         });
@@ -51,6 +61,8 @@ public class TwoPlayer extends Activity {
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MediaPlayer m = MediaPlayer.create(TwoPlayer.this,R.raw.click);
+                m.start();
                 Intent i = new Intent(TwoPlayer.this,Game2.class);
                 i.putExtra("Name1",n1);
                 i.putExtra("Name2",n2);

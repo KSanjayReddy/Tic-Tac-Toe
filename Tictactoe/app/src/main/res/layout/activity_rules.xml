@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/wall"
+    android:orientation="vertical"
+    tools:context="com.tictactoe.hellboy.tictactoe.Rules">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rules for Tic-Tac-Toe"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. The game is played on a grid that's 3 squares by 3 squares."
+        android:textSize="20sp"
+        android:gravity="left"
+        android:textColor="#000000"
+        />
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. You are X, your friend (or the computer in this case) is O. Players take turns putting their marks in empty squares."
+        android:textSize="20sp"
+        android:gravity="left"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3. The first player to get 3 of her marks in a row (up, down, across, or diagonally) is the winner."
+        android:textSize="20sp"
+        android:gravity="left"
+        android:textColor="#000000"
+        />
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4. When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie."
+        android:textSize="20sp"
+        android:gravity="left"
+        android:textColor="#000000"
+        />
+
+
+
+
+</LinearLayout>

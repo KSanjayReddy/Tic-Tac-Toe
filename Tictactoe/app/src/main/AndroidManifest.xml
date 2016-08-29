@@ -19,6 +19,7 @@
         <activity android:name=".TwoPlayer" />
         <activity android:name=".Game2" />
         <activity android:name=".Game1" />
+        <activity android:name=".Rules"></activity>
     </application>
 
 </manifest>

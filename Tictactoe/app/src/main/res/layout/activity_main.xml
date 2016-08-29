@@ -46,8 +46,8 @@
 
     <Button
         android:layout_weight="1"
-        android:id="@+id/options_id"
-        android:text="Options"
+        android:id="@+id/rules_id"
+        android:text="Rules"
         android:textColor="#FFFFFF"
         android:textSize="25sp"
         android:layout_width="270dp"
