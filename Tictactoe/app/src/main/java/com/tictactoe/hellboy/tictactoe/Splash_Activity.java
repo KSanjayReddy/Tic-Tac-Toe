@@ -15,10 +15,7 @@ public class Splash_Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_);
 
-        //MediaPlayer m = MediaPlayer.create(Splash_Activity.this,R.raw.track);
-        //m.start();
-
-        int secondsDelayed = 2;
+        int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 startActivity(new Intent(Splash_Activity.this, MainActivity.class));

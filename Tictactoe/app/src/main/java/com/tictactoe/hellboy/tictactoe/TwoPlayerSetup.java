@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class TwoPlayer extends Activity {
+public class TwoPlayerSetup extends Activity {
 
     Button b;
     String n1, n2;
@@ -18,26 +18,21 @@ public class TwoPlayer extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_player);
 
-        b = (Button) findViewById(R.id.gotog) ;
-
-
-
-
+        b = (Button) findViewById(R.id.gotogame) ;
         b.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-
                 EditText e1, e2;
-                e1 = (EditText) findViewById(R.id.edit1);
-                e2 = (EditText) findViewById(R.id.edit2);
+                e1 = (EditText) findViewById(R.id.player1);
+                e2 = (EditText) findViewById(R.id.player2);
 
 
-                MediaPlayer m = MediaPlayer.create(TwoPlayer.this, R.raw.click);
+                MediaPlayer m = MediaPlayer.create(TwoPlayerSetup.this, R.raw.click);
                 m.start();
                 n1 = e1.getText().toString();
                 n2 = e2.getText().toString();
-                Intent i = new Intent(TwoPlayer.this, TwoPlayerActivity.class);
+                Intent i = new Intent(TwoPlayerSetup.this, TwoPlayerActivity.class);
 
                 if(n1.length()==0){
                     n1= "Player 1";
@@ -45,7 +40,6 @@ public class TwoPlayer extends Activity {
                 if(n2.length()==0){
                     n2= "Player 2";
                 }
-
                 i.putExtra("Name1", n1);
                 i.putExtra("Name2", n2);
 
@@ -57,22 +51,5 @@ public class TwoPlayer extends Activity {
     }
 }
 
-//        b3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(n1 != null && n1 != ""){
-//                    i.putExtra("Name1",n1);
-//                }else{
-//                    i.putExtra("Name!","Player1");
-//                }
-//
-//                if(n2 != null && n2 != ""){
-//                    i.putExtra("Name2",n2);
-//                }else {
-//                    i.putExtra("Name2","Player2");
-//                }
-//                startActivity(i);
-//            }
-//        });
 
 

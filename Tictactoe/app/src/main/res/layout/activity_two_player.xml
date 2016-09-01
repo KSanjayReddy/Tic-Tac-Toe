@@ -6,35 +6,47 @@
     android:background="@drawable/wall"
     android:orientation="vertical"
     android:paddingTop="30dp"
-    tools:context="com.tictactoe.hellboy.tictactoe.TwoPlayer">
+    tools:context=".TwoPlayerSetup">
 
-    <EditText
-        android:id="@+id/edit1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="center"
+    <TextView
         android:textStyle="bold"
-        android:textColor="#000000" 
-        android:maxLength="10"
-        android:hint="Player 1 Name"
-        android:textSize="20sp"/>
-
-    <EditText
-        android:id="@+id/edit2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:maxLength="10"
-        android:hint="Player 2 Name"
-        android:textSize="20sp"/>
-    
-    <Button
-        android:id="@+id/gotog"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/two_players"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/player1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:hint="Player 1 Name"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/player2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:hint="Player 2 Name"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/gotogame"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#151515"
         android:layout_gravity="center"
@@ -42,7 +54,8 @@
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:padding="10dp"/>
+        android:layout_margin="20dp"
+        android:padding="2dp"/>
 
 
 </LinearLayout>

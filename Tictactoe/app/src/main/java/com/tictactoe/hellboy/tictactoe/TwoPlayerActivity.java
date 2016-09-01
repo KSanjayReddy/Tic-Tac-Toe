@@ -1,11 +1,13 @@
 package com.tictactoe.hellboy.tictactoe;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -83,10 +85,6 @@ public class TwoPlayerActivity extends Activity implements View.OnClickListener 
                 }else {
                     t.setText(name2+"'s Turn");
                 }
-
-
-
-
                 TextView r;
                 r= (TextView) findViewById(R.id.ng);
                 r.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -245,10 +243,23 @@ public class TwoPlayerActivity extends Activity implements View.OnClickListener 
     @Override
     public void onBackPressed()
     {
-        Intent i;
-        i = new Intent(TwoPlayerActivity.this,MainActivity.class);
-        startActivity(i);
-        super.onBackPressed();  // optional depending on your needs
+        new AlertDialog.Builder(TwoPlayerActivity.this)
+                .setTitle("Tic Tac Toe")
+                .setMessage("Are you sure you want to quit the game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i;
+                        i = new Intent(TwoPlayerActivity.this,MainActivity.class);
+                        startActivity(i);
+//                        super.onBackPressed();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+
     }
 
 } // class closed

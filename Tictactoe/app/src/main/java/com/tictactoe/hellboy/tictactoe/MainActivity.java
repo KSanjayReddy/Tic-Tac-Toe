@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
         twoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, TwoPlayer.class);
+                Intent i = new Intent(MainActivity.this, TwoPlayerSetup.class);
                 m.pause();
                 startActivity(i);
             }
@@ -44,21 +44,19 @@ public class MainActivity extends Activity {
                 m.pause();
                 //finishAffinity();
 
+                new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Tic Tac Toe")
+                .setMessage("Are you sure you want to quit the game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishAffinity();
+                    }
 
-
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Tic Tac Toe")
-                            .setMessage("Are you sure you want to quit the game?")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                            {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finishAffinity();
-                                }
-
-                            })
-                            .setNegativeButton("No", null)
-                            .show();
+                })
+                .setNegativeButton("No", null)
+                .show();
 
             }
         });
@@ -89,19 +87,19 @@ public class MainActivity extends Activity {
         m.pause();
 
         new AlertDialog.Builder(this)
-                .setIcon(R.drawable.wall)
-                .setTitle("Tic Tac Toe")
-                .setMessage("Are you sure you want to quit the game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finishAffinity();
-                    }
+        .setIcon(R.drawable.wall)
+        .setTitle("Tic Tac Toe")
+        .setMessage("Are you sure you want to quit the game?")
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
 
-                })
-                .setNegativeButton("No", null)
-                .show();
+        })
+        .setNegativeButton("No", null)
+        .show();
     }
 
 }

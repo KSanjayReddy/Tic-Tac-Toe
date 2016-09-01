@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,15 +54,13 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    // not working
                     final MediaPlayer mm = MediaPlayer.create(SinglePlayerActivity.this,R.raw.click);
                     mm.start();
 
                     Button tmp = (Button)view;
                     tmp.setText("X");
                     turnCount++;
-//                    TextView wt = (TextView) findViewById(R.id.whoseTurn);
-//                    wt.setText("COM'S Turn");
                     int bla = finalIndex;
                     Point best;
                     Point p = new Point(bla/3,bla%3);
@@ -80,36 +81,14 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
         newgame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                enableDisableAllButtons(true);
-//                turnCount = 0;
-//                there_is_a_winner=false;
-////                final MiniMax t = new MiniMax();
-////                int index = 0;
-////                final int finalIndex = index;
-//
-//
-//                TextView s;
-//                s = (TextView) findViewById(R.id.whoseTurn);
-//                s.setText("Your Turn");
-//                s.setTextColor(Color.parseColor("#0e0834"));
-//                s.setTypeface(null, Typeface.NORMAL);
-//
-//                TextView r;
-//                r= (TextView) findViewById(R.id.ng);
-//                r.setBackgroundColor(Color.parseColor("#ffffff"));
-//                r.setText("");
-
                 Intent i = getIntent();
                 finish();
                 startActivity(i);
-
-
 
             }
         });
 
     }
-
 
     public void buttonClicked(Button b, int x,int y){
 
@@ -168,7 +147,6 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
     }
 
     private void checkForWinner(){
-
         // check for horizontals
         if(a1.getText()==a2.getText() && a2.getText()==a3.getText() && !a1.isClickable())
             there_is_a_winner = true;
@@ -229,12 +207,12 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
     private void displayResult(String ss){
         TextView t,r;
         t = (TextView) findViewById(R.id.whoseTurn);
-        if(ss != "D" && ss!="L"){
+        if(!ss.equals("D") && !ss.equals("L")){
             String s = ss + " WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
-        }else if(ss== "L"){
+        }else if(ss.equals("L")){
             String s = "YOU LOSE";
             t.setText(s);
             t.setTextColor(Color.parseColor("#ee0000"));
@@ -251,10 +229,9 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
 
     }
 
-} //  final
+}
 
 
-//////////////////////////////////////////////////////////////////////////////////////
 
 
 
