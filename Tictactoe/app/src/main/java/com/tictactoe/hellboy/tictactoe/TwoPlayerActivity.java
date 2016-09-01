@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class Game2 extends Activity implements View.OnClickListener {
+public class TwoPlayerActivity extends Activity implements View.OnClickListener {
 
     String name1,name2;
 
@@ -110,8 +109,8 @@ public class Game2 extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        // Toast.makeText(Game2.this, "button clicked",Toast.LENGTH_SHORT).show();
-        final MediaPlayer mm = MediaPlayer.create(Game2.this,R.raw.click);
+        // Toast.makeText(TwoPlayerActivity.this, "button clicked",Toast.LENGTH_SHORT).show();
+        final MediaPlayer mm = MediaPlayer.create(TwoPlayerActivity.this,R.raw.click);
         mm.start();
        Button b = (Button) v;
         buttonClicked(b);
@@ -171,14 +170,14 @@ public class Game2 extends Activity implements View.OnClickListener {
 
         if(there_is_a_winner){
             if(!turn){
-                //Toast.makeText(Game2.this, "X won",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TwoPlayerActivity.this, "X won",Toast.LENGTH_SHORT).show();
                 xscore++;
                 displayResult(name1);
                 updateScorex(xscore);
 
             }
             else{
-                //Toast.makeText(Game2.this, "O won",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TwoPlayerActivity.this, "O won",Toast.LENGTH_SHORT).show();
                 yscore++;
                 displayResult(name2);
                 updateScorey(yscore);
@@ -187,7 +186,7 @@ public class Game2 extends Activity implements View.OnClickListener {
             enableDisableAllButtons(false);
         }
         else if (turnCount == 9){
-            //Toast.makeText(Game2.this, "Match Drawn",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(TwoPlayerActivity.this, "Match Drawn",Toast.LENGTH_SHORT).show();
             displayResult("D");
         }
     }
@@ -226,7 +225,7 @@ public class Game2 extends Activity implements View.OnClickListener {
     private void displayResult(String ss){
         TextView t,r;
         t = (TextView) findViewById(R.id.whoseTurn);
-        if(ss != "D"){
+        if(! ss.equals("D")){
             String s = ss + " WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
@@ -247,11 +246,9 @@ public class Game2 extends Activity implements View.OnClickListener {
     public void onBackPressed()
     {
         Intent i;
-        i = new Intent(Game2.this,MainActivity.class);
+        i = new Intent(TwoPlayerActivity.this,MainActivity.class);
         startActivity(i);
         super.onBackPressed();  // optional depending on your needs
     }
-
-
 
 } // class closed

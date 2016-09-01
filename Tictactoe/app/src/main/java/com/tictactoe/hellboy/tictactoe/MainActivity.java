@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
         oneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Game1.class);
+                Intent i = new Intent(MainActivity.this, SinglePlayerActivity.class);
                 m.pause();
                 startActivity(i);
             }
@@ -84,25 +84,24 @@ public class MainActivity extends Activity {
         });
     }
 
-        @Override
-        public void onBackPressed() {
-            m.pause();
+    @Override
+    public void onBackPressed() {
+        m.pause();
 
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.wall)
-                    .setTitle("Tic Tac Toe")
-                    .setMessage("Are you sure you want to quit the game?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finishAffinity();
-                        }
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.wall)
+                .setTitle("Tic Tac Toe")
+                .setMessage("Are you sure you want to quit the game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishAffinity();
+                    }
 
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-        }
-
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
 
 }

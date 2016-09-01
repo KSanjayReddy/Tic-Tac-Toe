@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Created by hellboy on 29/8/16.
  */
- public class ttt {
+ public class MiniMax {
 
     Point userMove;
     int tmp;

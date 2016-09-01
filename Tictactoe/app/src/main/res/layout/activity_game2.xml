@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/wall"
     android:layout_marginTop="20dp"
-    tools:context="com.tictactoe.hellboy.tictactoe.Game2"
+    tools:context=".TwoPlayerActivity"
     android:orientation="vertical">
 
 

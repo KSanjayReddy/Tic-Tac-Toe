@@ -6,7 +6,7 @@
     android:background="@drawable/wall"
     android:layout_marginTop="20dp"
     android:orientation="vertical"
-    tools:context="com.tictactoe.hellboy.tictactoe.Game1">
+    tools:context=".SinglePlayerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

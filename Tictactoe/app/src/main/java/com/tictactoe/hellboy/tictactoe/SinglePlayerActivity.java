@@ -1,21 +1,16 @@
 package com.tictactoe.hellboy.tictactoe;
 
-import java.util.*;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class Game1 extends Activity implements View.OnClickListener {
+public class SinglePlayerActivity extends Activity implements View.OnClickListener {
 
     // All variables
     Button a1,a2,a3,b1,b2,b3,c1,c2,c3,newgame;
@@ -49,7 +44,7 @@ public class Game1 extends Activity implements View.OnClickListener {
 
         barray = new Button[]{a1,a2,a3,b1,b2,b3,c1,c2,c3};
         int index = 0;
-        final ttt t = new ttt();
+        final MiniMax t = new MiniMax();
         for(Button b: barray){
             // means for every button in barray
             final int finalIndex = index;
@@ -57,7 +52,7 @@ public class Game1 extends Activity implements View.OnClickListener {
                 @Override
                 public void onClick(View view) {
 
-                    final MediaPlayer mm = MediaPlayer.create(Game1.this,R.raw.click);
+                    final MediaPlayer mm = MediaPlayer.create(SinglePlayerActivity.this,R.raw.click);
                     mm.start();
 
                     Button tmp = (Button)view;
@@ -75,7 +70,7 @@ public class Game1 extends Activity implements View.OnClickListener {
                         checkForWinner();
                     }
 
-                    //Toast.makeText(Game1.this,"best move"+best.x+" "+best.y,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SinglePlayerActivity.this,"best move"+best.x+" "+best.y,Toast.LENGTH_SHORT).show();
                 }
             });
             index++;
@@ -88,7 +83,7 @@ public class Game1 extends Activity implements View.OnClickListener {
 //                enableDisableAllButtons(true);
 //                turnCount = 0;
 //                there_is_a_winner=false;
-////                final ttt t = new ttt();
+////                final MiniMax t = new MiniMax();
 ////                int index = 0;
 ////                final int finalIndex = index;
 //
@@ -118,7 +113,7 @@ public class Game1 extends Activity implements View.OnClickListener {
 
     public void buttonClicked(Button b, int x,int y){
 
-        //Toast.makeText(Game1.this, "count"+turnCount,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(SinglePlayerActivity.this, "count"+turnCount,Toast.LENGTH_SHORT).show();
         Button comChoice = a1;
         b.setClickable(false);
         comChoice = findTheButton(x,y);
@@ -199,14 +194,14 @@ public class Game1 extends Activity implements View.OnClickListener {
 
         if(there_is_a_winner){
             if(!turn){
-                //Toast.makeText(Game2.this, "X won",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TwoPlayerActivity.this, "X won",Toast.LENGTH_SHORT).show();
                 xscore++;
                 displayResult("YOU");
                 //updateScorex(xscore);
 
             }
             else{
-                //Toast.makeText(Game2.this, "O won",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TwoPlayerActivity.this, "O won",Toast.LENGTH_SHORT).show();
                 yscore++;
                 displayResult("L");
                 //updateScorey(yscore);
@@ -215,7 +210,7 @@ public class Game1 extends Activity implements View.OnClickListener {
             enableDisableAllButtons(false);
         }
         else if (turnCount == 9){
-            //Toast.makeText(Game2.this, "Match Drawn",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(TwoPlayerActivity.this, "Match Drawn",Toast.LENGTH_SHORT).show();
             displayResult("D");
         }
     }

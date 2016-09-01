@@ -2,14 +2,11 @@ package com.tictactoe.hellboy.tictactoe;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class TwoPlayer extends Activity {
 
@@ -40,7 +37,7 @@ public class TwoPlayer extends Activity {
                 m.start();
                 n1 = e1.getText().toString();
                 n2 = e2.getText().toString();
-                Intent i = new Intent(TwoPlayer.this, Game2.class);
+                Intent i = new Intent(TwoPlayer.this, TwoPlayerActivity.class);
 
                 if(n1.length()==0){
                     n1= "Player 1";
