@@ -16,7 +16,7 @@ public class TwoPlayerSetup extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_two_player);
+        setContentView(R.layout.activity_two_player_setup);
 
         b = (Button) findViewById(R.id.gotogame) ;
         b.setOnClickListener(new View.OnClickListener() {
