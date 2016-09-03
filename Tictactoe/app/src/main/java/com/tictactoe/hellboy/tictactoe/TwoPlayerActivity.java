@@ -258,21 +258,21 @@ public class TwoPlayerActivity extends Activity{
     public void onBackPressed()
     {
         new AlertDialog.Builder(TwoPlayerActivity.this)
-                .setTitle("Tic Tac Toe")
-                .setMessage("Are you sure you want to quit the game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent i;
-                        i = new Intent(TwoPlayerActivity.this,MainActivity.class);
-                        startActivity(i);
-//                        super.onBackPressed();
-                    }
+            .setTitle("Tic Tac Toe")
+            .setMessage("Are you sure you want to quit the game?")
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i;
+                    i = new Intent(TwoPlayerActivity.this,MainActivity.class);
+                    startActivity(i);
+    //                        super.onBackPressed();
+                }
 
-                })
-                .setNegativeButton("No", null)
-                .show();
+            })
+            .setNegativeButton("No", null)
+            .show();
 
     }
 

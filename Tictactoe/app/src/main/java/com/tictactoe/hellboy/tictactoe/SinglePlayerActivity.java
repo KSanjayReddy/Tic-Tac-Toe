@@ -1,14 +1,18 @@
 package com.tictactoe.hellboy.tictactoe;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Arrays;
 
 public class SinglePlayerActivity extends Activity implements View.OnClickListener {
 
@@ -84,17 +88,6 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
             index++;
         }
 
-//        newgame = (Button) findViewById(R.id.ng);
-//        newgame.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = getIntent();
-//                finish();
-//                startActivity(i);
-//
-//            }
-//        });
-
     }
 
     public void buttonClicked(Button b, int x,int y){
@@ -118,39 +111,40 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
     }
 
     public Button findTheButton(int x,int y){
-        Button b = null;
-        int index=0;
-        index = x*3 + y;
-        switch (index){
-            case 0:
-                b= a1;
-                break;
-            case 1:
-                b= a2;
-                break;
-            case 2:
-                b= a3;
-                break;
-            case 3:
-                b= b1;
-                break;
-            case 4:
-                b= b2;
-                break;
-            case 5:
-                b= b3;
-                break;
-            case 6:
-                b= c1;
-                break;
-            case 7:
-                b= c2;
-                break;
-            case 8:
-                b= c3;
-                break;
-        }
-        return b;
+        return Arrays.asList(barray).get(x* 3 + y);
+
+//        int index=0;
+//        index = x*3 + y;
+//        switch (index){
+//            case 0:
+//                b= a1;
+//                break;
+//            case 1:
+//                b= a2;
+//                break;
+//            case 2:
+//                b= a3;
+//                break;
+//            case 3:
+//                b= b1;
+//                break;
+//            case 4:
+//                b= b2;
+//                break;
+//            case 5:
+//                b= b3;
+//                break;
+//            case 6:
+//                b= c1;
+//                break;
+//            case 7:
+//                b= c2;
+//                break;
+//            case 8:
+//                b= c3;
+//                break;
+//        }
+//        return b;
 
     }
 
@@ -233,6 +227,28 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
         r= (TextView) findViewById(R.id.ng);
         r.setBackgroundColor(Color.parseColor("#006400"));
         r.setText("Next Match");
+
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        new AlertDialog.Builder(SinglePlayerActivity.this)
+            .setTitle("Tic Tac Toe")
+            .setMessage("Are you sure you want to quit the game?")
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i;
+                    i = new Intent(SinglePlayerActivity.this,MainActivity.class);
+                    startActivity(i);
+                    //                        super.onBackPressed();
+                }
+
+            })
+            .setNegativeButton("No", null)
+            .show();
 
     }
 
