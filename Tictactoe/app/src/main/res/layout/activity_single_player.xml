@@ -70,7 +70,7 @@
 
 
         <LinearLayout
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="15dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,6 +131,15 @@
 
         </LinearLayout>
 
+        <TextView
+            android:gravity="center_horizontal"
+            android:id="@+id/win_lose_msg"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:text=""
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"

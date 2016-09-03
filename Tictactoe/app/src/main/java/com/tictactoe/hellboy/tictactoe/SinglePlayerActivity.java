@@ -23,7 +23,6 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
     Boolean turn = true;   // X= true,you  O=false,com
     int turnCount = 0;
     Boolean there_is_a_winner = false;
-    int xscore=0,yscore=0;
 
     // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
     Integer[][] board = new Integer[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
@@ -112,40 +111,6 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
 
     public Button findTheButton(int x,int y){
         return Arrays.asList(barray).get(x* 3 + y);
-
-//        int index=0;
-//        index = x*3 + y;
-//        switch (index){
-//            case 0:
-//                b= a1;
-//                break;
-//            case 1:
-//                b= a2;
-//                break;
-//            case 2:
-//                b= a3;
-//                break;
-//            case 3:
-//                b= b1;
-//                break;
-//            case 4:
-//                b= b2;
-//                break;
-//            case 5:
-//                b= b3;
-//                break;
-//            case 6:
-//                b= c1;
-//                break;
-//            case 7:
-//                b= c2;
-//                break;
-//            case 8:
-//                b= c3;
-//                break;
-//        }
-//        return b;
-
     }
 
     private void checkForWinner(){
@@ -173,35 +138,47 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
 
         if(there_is_a_winner){
             if(!turn){
-                //Toast.makeText(TwoPlayerActivity.this, "X won",Toast.LENGTH_SHORT).show();
-                xscore++;
                 displayResult("YOU");
-                //updateScorex(xscore);
+                updateScore(false);
 
             }
             else{
-                //Toast.makeText(TwoPlayerActivity.this, "O won",Toast.LENGTH_SHORT).show();
-                yscore++;
                 displayResult("L");
-                //updateScorey(yscore);
+                updateScore(true);
             }
 
             enableDisableAllButtons(false);
         }
         else if (turnCount == 9){
-            //Toast.makeText(TwoPlayerActivity.this, "Match Drawn",Toast.LENGTH_SHORT).show();
             displayResult("D");
+            enableDisableAllButtons(true);
         }
     }
 
-
+    private void updateScore(boolean id){
+        // true is for computer score
+        // false is for human score
+        if(id){
+            TextView score = (TextView) findViewById(R.id.comp_score);
+            if(score != null)
+                score.setText(Integer.toString(Integer.parseInt(score.getText().toString()) + 1));
+        }
+        else{
+            TextView score = (TextView) findViewById(R.id.you_score);
+            if(score != null)
+                score.setText(Integer.toString(Integer.parseInt(score.getText().toString()) + 1));
+        }
+    }
 
     private void enableDisableAllButtons(Boolean value){
         for(Button b : barray){
             b.setClickable(value);
-            if(value){
-                b.setText("");
-            }
+            if(value)
+                b.setBackgroundResource(R.drawable.gamebutton);
+        }
+        // reset board
+        if(value) {
+            board = new Integer[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
         }
     }
 
@@ -209,7 +186,7 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
         TextView t,r;
         t = (TextView) findViewById(R.id.whoseTurn);
         if(!ss.equals("D") && !ss.equals("L")){
-            String s = ss + " WON";
+            String s = "YOU WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
@@ -224,15 +201,10 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
         }
-        r= (TextView) findViewById(R.id.ng);
-        r.setBackgroundColor(Color.parseColor("#006400"));
-        r.setText("Next Match");
-
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         new AlertDialog.Builder(SinglePlayerActivity.this)
             .setTitle("Tic Tac Toe")
             .setMessage("Are you sure you want to quit the game?")
@@ -243,9 +215,7 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
                     Intent i;
                     i = new Intent(SinglePlayerActivity.this,MainActivity.class);
                     startActivity(i);
-                    //                        super.onBackPressed();
                 }
-
             })
             .setNegativeButton("No", null)
             .show();

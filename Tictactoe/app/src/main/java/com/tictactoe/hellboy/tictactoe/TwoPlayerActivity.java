@@ -255,8 +255,7 @@ public class TwoPlayerActivity extends Activity{
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         new AlertDialog.Builder(TwoPlayerActivity.this)
             .setTitle("Tic Tac Toe")
             .setMessage("Are you sure you want to quit the game?")
