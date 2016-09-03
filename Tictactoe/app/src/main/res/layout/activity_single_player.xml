@@ -7,7 +7,7 @@
     tools:context=".SinglePlayerActivity">
 
     <LinearLayout
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="2dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,61 +16,65 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="00dp">
             <TextView
+                android:background="#96005494"
                 android:id="@+id/you_name"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:textColor="#005494"
+                android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:text="You"
-                android:textSize="30sp"/>
+                android:textSize="38sp"/>
 
             <TextView
+                android:background="#96e11c1c"
                 android:id="@+id/comp_name"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:textColor="#ff4747"
+                android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:text="AI"
-                android:textSize="30sp"/>
+                android:textSize="38sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="40dp">
             <TextView
+                android:background="#96005494"
                 android:id="@+id/you_score"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:textColor="#005494"
+                android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="30sp"/>
+                android:textSize="38sp"/>
 
             <TextView
+                android:background="#96e11c1c"
                 android:id="@+id/comp_score"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:textColor="#ff4747"
+                android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="30sp"/>
+                android:textSize="38sp"/>
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

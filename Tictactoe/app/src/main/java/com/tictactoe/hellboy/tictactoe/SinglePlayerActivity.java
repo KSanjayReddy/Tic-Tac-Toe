@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class SinglePlayerActivity extends Activity {
 
     // All variables
-    Button a1,a2,a3,b1,b2,b3,c1,c2,c3,newgame;
+    Button a1,a2,a3,b1,b2,b3,c1,c2,c3;
     Button[] barray;
     String[][] array = new String[3][3];
     Boolean turn = true;   // X= true,you  O=false,com
@@ -237,10 +237,10 @@ public class SinglePlayerActivity extends Activity {
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
-            anim.setDuration(150);
+            anim.setDuration(400);
             anim.setStartOffset(20);
             anim.setRepeatMode(Animation.REVERSE);
-            anim.setRepeatCount(10);
+            anim.setRepeatCount(Animation.INFINITE);
             t.startAnimation(anim);
 
         }else if(ss.equals("L")){
@@ -248,20 +248,20 @@ public class SinglePlayerActivity extends Activity {
             t.setText(s);
             t.setTextColor(Color.parseColor("#ee0000"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
-            anim.setDuration(150);
+            anim.setDuration(400);
             anim.setStartOffset(20);
             anim.setRepeatMode(Animation.REVERSE);
-            anim.setRepeatCount(10);
+            anim.setRepeatCount(Animation.INFINITE);
             t.startAnimation(anim);
         }
         else{
             t.setText("Match Drawn");
-            t.setTextColor(Color.parseColor("#006400"));
+            t.setTextColor(Color.parseColor("#decb00"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
-            anim.setDuration(150);
+            anim.setDuration(400);
             anim.setStartOffset(20);
             anim.setRepeatMode(Animation.REVERSE);
-            anim.setRepeatCount(10);
+            anim.setRepeatCount(Animation.INFINITE);
             t.startAnimation(anim);
         }
     }
