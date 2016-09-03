@@ -78,6 +78,7 @@
             <TextView
                 android:background="#d6f96969"
                 android:clickable="true"
+                android:onClick="reset_game"
                 android:textSize="34sp"
                 android:padding="12dp"
                 android:textColor="#ece5e5"
@@ -99,6 +100,7 @@
             <TextView
                 android:background="#d6028f09"
                 android:clickable="true"
+                android:onClick="request_more_games"
                 android:textSize="34sp"
                 android:padding="12dp"
                 android:textColor="#ece5e5"
@@ -120,6 +122,7 @@
             <TextView
                 android:background="#f4c7ae07"
                 android:clickable="true"
+                android:onClick="view_history"
                 android:textSize="34sp"
                 android:padding="12dp"
                 android:textColor="#ece5e5"

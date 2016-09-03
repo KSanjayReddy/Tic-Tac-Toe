@@ -9,12 +9,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Arrays;
 
-public class SinglePlayerActivity extends Activity implements View.OnClickListener {
+public class SinglePlayerActivity extends Activity {
 
     // All variables
     Button a1,a2,a3,b1,b2,b3,c1,c2,c3,newgame;
@@ -23,6 +25,7 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
     Boolean turn = true;   // X= true,you  O=false,com
     int turnCount = 0;
     Boolean there_is_a_winner = false;
+    MiniMax t;
 
     // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
     Integer[][] board = new Integer[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
@@ -45,6 +48,8 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
         if (history != null)
             history.setTypeface(font);
 
+        t = new MiniMax();
+
         a1 = (Button) findViewById(R.id.a1);
         a2 = (Button) findViewById(R.id.a2);
         a3 = (Button) findViewById(R.id.a3);
@@ -57,17 +62,15 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
 
         barray = new Button[]{a1,a2,a3,b1,b2,b3,c1,c2,c3};
         int index = 0;
-        final MiniMax t = new MiniMax();
+
         for(Button b: barray){
             // means for every button in barray
             final int finalIndex = index;
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // not working
                     final MediaPlayer mm = MediaPlayer.create(SinglePlayerActivity.this,R.raw.click);
                     mm.start();
-
                     Button tmp = (Button)view;
                     tmp.setBackgroundResource(R.drawable.cross);
                     turnCount++;
@@ -104,11 +107,6 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
         checkForWinner();
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
     public Button findTheButton(int x,int y){
         return Arrays.asList(barray).get(x* 3 + y);
     }
@@ -140,24 +138,65 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
             if(!turn){
                 displayResult("YOU");
                 updateScore(false);
-
             }
             else{
                 displayResult("L");
                 updateScore(true);
             }
-
             enableDisableAllButtons(false);
+            return;
+
         }
-        else if (turnCount == 9){
+        if (turnCount == 9){
             displayResult("D");
-            enableDisableAllButtons(true);
+            enableDisableAllButtons(false);
+
         }
     }
 
+    public void reset_game(View view){
+        new AlertDialog.Builder(SinglePlayerActivity.this)
+            .setTitle("Tic Tac Toe")
+            .setMessage("Are you sure you want to reset the game?")
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i;
+                    i = new Intent(SinglePlayerActivity.this,SinglePlayerActivity.class);
+                    startActivity(i);
+                }
+            })
+            .setNegativeButton("No", null)
+            .show();
+    }
+
+    public void request_more_games(View view){
+        // handle result and draw cases
+        if(! there_is_a_winner && turnCount != 9){
+            new AlertDialog.Builder(SinglePlayerActivity.this)
+            .setTitle("Tic Tac Toe")
+            .setMessage("Game in progress. Finish it before requesting a new one")
+            .setNeutralButton("Ok", null)
+            .show();
+
+            return;
+        }
+        enableDisableAllButtons(true);
+        t = new MiniMax();
+    }
+
+    public void view_history(View view){
+        // to be added soon
+    }
+
+    /**
+     * @param id
+     * true is for computer score
+     * false is for human score
+     */
     private void updateScore(boolean id){
-        // true is for computer score
-        // false is for human score
+
         if(id){
             TextView score = (TextView) findViewById(R.id.comp_score);
             if(score != null)
@@ -170,6 +209,10 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
         }
     }
 
+    /**
+     * @param value : false when to pause board after a game to make it view only
+     *              : true to reset board
+     */
     private void enableDisableAllButtons(Boolean value){
         for(Button b : barray){
             b.setClickable(value);
@@ -179,27 +222,47 @@ public class SinglePlayerActivity extends Activity implements View.OnClickListen
         // reset board
         if(value) {
             board = new Integer[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
+            TextView t = (TextView) findViewById(R.id.win_lose_msg);
+            t.setText("");
+            turnCount = 0;
+            there_is_a_winner = false;
         }
     }
 
     private void displayResult(String ss){
-        TextView t,r;
-        t = (TextView) findViewById(R.id.whoseTurn);
+        TextView t;
+        t = (TextView) findViewById(R.id.win_lose_msg);
         if(!ss.equals("D") && !ss.equals("L")){
             String s = "YOU WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
-            t.setTypeface(null, Typeface.BOLD);
+            Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setDuration(150);
+            anim.setStartOffset(20);
+            anim.setRepeatMode(Animation.REVERSE);
+            anim.setRepeatCount(10);
+            t.startAnimation(anim);
+
         }else if(ss.equals("L")){
             String s = "YOU LOSE";
             t.setText(s);
             t.setTextColor(Color.parseColor("#ee0000"));
-            t.setTypeface(null, Typeface.BOLD);
+            Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setDuration(150);
+            anim.setStartOffset(20);
+            anim.setRepeatMode(Animation.REVERSE);
+            anim.setRepeatCount(10);
+            t.startAnimation(anim);
         }
         else{
             t.setText("Match Drawn");
             t.setTextColor(Color.parseColor("#006400"));
-            t.setTypeface(null, Typeface.BOLD);
+            Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setDuration(150);
+            anim.setStartOffset(20);
+            anim.setRepeatMode(Animation.REVERSE);
+            anim.setRepeatCount(10);
+            t.startAnimation(anim);
         }
     }
 
