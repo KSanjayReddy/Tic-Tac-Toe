@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class SinglePlayerActivity extends Activity {
 
@@ -25,7 +27,7 @@ public class SinglePlayerActivity extends Activity {
     Boolean turn = true;   // X= true,you  O=false,com
     int turnCount = 0;
     Boolean there_is_a_winner = false;
-    MiniMax t;
+    MiniMax miniMax;
 
     // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
     Integer[][] board = new Integer[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
@@ -48,7 +50,16 @@ public class SinglePlayerActivity extends Activity {
         if (history != null)
             history.setTypeface(font);
 
-        t = new MiniMax();
+        TextView score = (TextView) findViewById(R.id.comp_score);
+        if(score != null)
+            score.setText("0");
+
+        score = (TextView) findViewById(R.id.you_score);
+        if(score != null)
+            score.setText("0");
+
+
+        miniMax = new MiniMax();
 
         a1 = (Button) findViewById(R.id.a1);
         a2 = (Button) findViewById(R.id.a2);
@@ -63,7 +74,7 @@ public class SinglePlayerActivity extends Activity {
         barray = new Button[]{a1,a2,a3,b1,b2,b3,c1,c2,c3};
         int index = 0;
 
-        for(Button b: barray){
+        for(final Button b: barray){
             // means for every button in barray
             final int finalIndex = index;
             b.setOnClickListener(new View.OnClickListener() {
@@ -73,14 +84,35 @@ public class SinglePlayerActivity extends Activity {
                     mm.start();
                     Button tmp = (Button)view;
                     tmp.setBackgroundResource(R.drawable.cross);
+                    tmp.setClickable(false);
                     turnCount++;
+                    turn = !turn;
                     Point best;
                     Point p = new Point(finalIndex/3, finalIndex%3);
                     board[finalIndex/3][finalIndex%3] = 1;
+                    checkForWinner();
+
+                    if(there_is_a_winner)
+                        return;
+
                     if(turnCount != 9){
-                        best = t.setUserMove(p);
+                        /*
+                        difficulty levels to be implemented here
+                         */
+                        while(true){
+                            Random r = new Random();
+                            int x = r.nextInt(3);
+                            int y = r.nextInt(3);
+                            if(board[x][y] == -1){
+                                best = new Point(x, y);
+                                break;
+                            }
+
+                        }
+                        //best = miniMax.setUserMove(p);
                         buttonClicked((Button)view, best.x , best.y);
-                    }else{
+                    }
+                    else{
                         checkForWinner();
                     }
 
@@ -95,15 +127,14 @@ public class SinglePlayerActivity extends Activity {
     public void buttonClicked(Button b, int x,int y){
 
         //Toast.makeText(SinglePlayerActivity.this, "count"+turnCount,Toast.LENGTH_SHORT).show();
-        Button comChoice = a1;
+        Button comChoice;
         b.setClickable(false);
         comChoice = findTheButton(x,y);
         comChoice.setBackgroundResource(R.drawable.circle);
         board[x][y] = 0;
         turnCount++;
         comChoice.setClickable(false);
-//        whoseTurn.setText("Your Turn");
-        //turn = !turn;
+        turn = !turn;
         checkForWinner();
     }
 
@@ -136,8 +167,9 @@ public class SinglePlayerActivity extends Activity {
 
         if(there_is_a_winner){
             if(!turn){
-                displayResult("YOU");
+                displayResult("W");
                 updateScore(false);
+                return;
             }
             else{
                 displayResult("L");
@@ -183,7 +215,8 @@ public class SinglePlayerActivity extends Activity {
             return;
         }
         enableDisableAllButtons(true);
-        t = new MiniMax();
+        miniMax = new MiniMax();
+
     }
 
     public void view_history(View view){
@@ -226,13 +259,14 @@ public class SinglePlayerActivity extends Activity {
             t.setText("");
             turnCount = 0;
             there_is_a_winner = false;
+            turn = true;
         }
     }
 
     private void displayResult(String ss){
         TextView t;
         t = (TextView) findViewById(R.id.win_lose_msg);
-        if(!ss.equals("D") && !ss.equals("L")){
+        if(ss.equals("W")){
             String s = "YOU WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
