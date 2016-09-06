@@ -2,4 +2,8 @@
     <string name="app_name">Tictactoe</string>
     <string name="algo"></string>
     <string name="his"></string>
+    <string name="two_players">Enter Player Names</string>
+    <string name="reload_icon">&#xf021;</string>
+    <string name="new_game_icon">&#xf055;</string>
+    <string name="history_icon">&#xf03a;</string>
 </resources>

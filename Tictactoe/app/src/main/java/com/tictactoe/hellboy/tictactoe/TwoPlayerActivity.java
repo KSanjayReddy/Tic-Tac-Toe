@@ -1,18 +1,23 @@
 package com.tictactoe.hellboy.tictactoe;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class Game2 extends Activity implements View.OnClickListener {
+import java.util.Arrays;
+
+public class TwoPlayerActivity extends Activity{
+    // TODO : too many unnecessary global variables
+    // FIXME : why are all functions without any arguments, main reason for the above
 
     String name1,name2;
 
@@ -20,12 +25,16 @@ public class Game2 extends Activity implements View.OnClickListener {
     Button a1,a2,a3,b1,b2,b3,c1,c2,c3,newgame;
     Button[] barray;
     Boolean turn = true;   // X= true  O=false
+
     //Boolean match = true;
     int match = 1;
     int turnCount = 0;
     Boolean there_is_a_winner = false;
     int xscore=0,yscore=0;
 
+
+    // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
+    Integer[][] board = new Integer[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -34,7 +43,7 @@ public class Game2 extends Activity implements View.OnClickListener {
         name2= extras.getString("Name2");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game2);
+        setContentView(R.layout.activity_two_player);
 
         TextView tmp;
         tmp = (TextView) findViewById(R.id.namex);
@@ -84,10 +93,6 @@ public class Game2 extends Activity implements View.OnClickListener {
                 }else {
                     t.setText(name2+"'s Turn");
                 }
-
-
-
-
                 TextView r;
                 r= (TextView) findViewById(R.id.ng);
                 r.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -101,27 +106,28 @@ public class Game2 extends Activity implements View.OnClickListener {
 
         for(Button b : barray){
             // means for every button in barray
+            final MediaPlayer mm = MediaPlayer.create(TwoPlayerActivity.this,R.raw.click);
 
-
-            b.setOnClickListener(this);
+            b.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mm.start();
+                    Button b = (Button) view;
+                    buttonClicked(b);
+                }
+            });
         }
 
     }
 
-    @Override
-    public void onClick(View v) {
-        // Toast.makeText(Game2.this, "button clicked",Toast.LENGTH_SHORT).show();
-        final MediaPlayer mm = MediaPlayer.create(Game2.this,R.raw.click);
-        mm.start();
-       Button b = (Button) v;
-        buttonClicked(b);
-
-    }
-
     public void buttonClicked(Button b){
+        int idx = Arrays.asList(barray).indexOf(b);
+        // 1 for cross
+        board[idx/3][idx%3] = 1;
 
         if(turn){  // X's turn
-            b.setText("X");
+            b.setBackgroundResource(R.drawable.cross);
+
             if(match %2 ==0){
                 updateWhoseTurn(name1);
             }else{
@@ -130,7 +136,9 @@ public class Game2 extends Activity implements View.OnClickListener {
             updateWhoseTurn(name2);
         }
         else{   // Y's turn
-            b.setText("O");
+            b.setBackgroundResource(R.drawable.circle);
+            // 1 for cross
+            board[idx/3][idx%3] = 0;
             if(match %2 == 0){
                 updateWhoseTurn(name2);
             }else{
@@ -146,39 +154,39 @@ public class Game2 extends Activity implements View.OnClickListener {
 
     private void checkForWinner(){
 
-        // check for horizontals
-        if(a1.getText()==a2.getText() && a2.getText()==a3.getText() && !a1.isClickable())
-            there_is_a_winner = true;
-        if(b1.getText()==b2.getText() && b2.getText()==b3.getText() && !b1.isClickable())
-            there_is_a_winner = true;
-        if(c1.getText()==c2.getText() && c2.getText()==c3.getText() && !c1.isClickable())
-            there_is_a_winner = true;
+        // logic seems fine, so didnt change it
+        //horizontal
+        if(board[0][0].equals(board[0][1]) && board[0][1].equals(board[0][2]) && !board[0][0].equals(-1))
+            there_is_a_winner =true;
+        if(board[1][0].equals(board[1][1]) && board[1][1].equals(board[1][2]) && !board[1][0].equals(-1))
+            there_is_a_winner =true;
+        if(board[2][0].equals(board[2][1]) && board[2][1].equals(board[2][2]) && !board[2][0].equals(-1))
+            there_is_a_winner =true;
 
-        // check for verticals
+        // vertical
+        if(board[0][0].equals(board[1][0]) && board[1][0].equals(board[2][0]) && !board[0][0].equals(-1))
+            there_is_a_winner =true;
+        if(board[0][1].equals(board[1][1]) && board[1][1].equals(board[2][1]) && !board[0][1].equals(-1))
+            there_is_a_winner =true;
+        if(board[0][2].equals(board[1][2]) && board[1][2].equals(board[2][2]) && !board[0][2].equals(-1))
+            there_is_a_winner =true;
 
-        if(a1.getText()==b1.getText() && b1.getText()==c1.getText() && !a1.isClickable())
-            there_is_a_winner = true;
-        if(a2.getText()==b2.getText() && b2.getText()==c2.getText() && !a2.isClickable())
-            there_is_a_winner = true;
-        if(a3.getText()==b3.getText() && b3.getText()==c3.getText() && !a3.isClickable())
-            there_is_a_winner = true;
-
-        // for two diagonals
-        if(a1.getText()==b2.getText() && b2.getText()==c3.getText() && !a1.isClickable())
-            there_is_a_winner = true;
-        if(a3.getText()==b2.getText() && b2.getText()==c1.getText() && !a3.isClickable())
-            there_is_a_winner = true;
+        //diagonals
+        if(board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(-1))
+            there_is_a_winner =true;
+        if(board[2][0].equals(board[1][1]) && board[1][1].equals(board[0][2]) && !board[0][2].equals(-1))
+            there_is_a_winner =true;
 
         if(there_is_a_winner){
             if(!turn){
-                //Toast.makeText(Game2.this, "X won",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TwoPlayerActivity.this, "X won",Toast.LENGTH_SHORT).show();
                 xscore++;
                 displayResult(name1);
                 updateScorex(xscore);
 
             }
             else{
-                //Toast.makeText(Game2.this, "O won",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TwoPlayerActivity.this, "O won",Toast.LENGTH_SHORT).show();
                 yscore++;
                 displayResult(name2);
                 updateScorey(yscore);
@@ -187,7 +195,7 @@ public class Game2 extends Activity implements View.OnClickListener {
             enableDisableAllButtons(false);
         }
         else if (turnCount == 9){
-            //Toast.makeText(Game2.this, "Match Drawn",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(TwoPlayerActivity.this, "Match Drawn",Toast.LENGTH_SHORT).show();
             displayResult("D");
         }
     }
@@ -195,15 +203,18 @@ public class Game2 extends Activity implements View.OnClickListener {
     private void enableDisableAllButtons(Boolean value){
         for(Button b : barray){
             b.setClickable(value);
-            if(value){
-                b.setText("");
-            }
+            if(value)
+                b.setBackgroundResource(R.drawable.gamebutton);
+        }
+        // reset board
+        if(value) {
+            board = new Integer[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
         }
     }
 
     private void updateScorex(int x){
         TextView t;
-        t = (TextView) findViewById(R.id.scorex);
+        t = (TextView) findViewById(R.id.you_name);
         String s="";
         t.setText(s+x);
     }
@@ -226,7 +237,7 @@ public class Game2 extends Activity implements View.OnClickListener {
     private void displayResult(String ss){
         TextView t,r;
         t = (TextView) findViewById(R.id.whoseTurn);
-        if(ss != "D"){
+        if(! ss.equals("D")){
             String s = ss + " WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
@@ -244,14 +255,24 @@ public class Game2 extends Activity implements View.OnClickListener {
     }
 
     @Override
-    public void onBackPressed()
-    {
-        Intent i;
-        i = new Intent(Game2.this,MainActivity.class);
-        startActivity(i);
-        super.onBackPressed();  // optional depending on your needs
+    public void onBackPressed() {
+        new AlertDialog.Builder(TwoPlayerActivity.this)
+            .setTitle("Tic Tac Toe")
+            .setMessage("Are you sure you want to quit the game?")
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i;
+                    i = new Intent(TwoPlayerActivity.this,MainActivity.class);
+                    startActivity(i);
+    //                        super.onBackPressed();
+                }
+
+            })
+            .setNegativeButton("No", null)
+            .show();
+
     }
-
-
 
 } // class closed
