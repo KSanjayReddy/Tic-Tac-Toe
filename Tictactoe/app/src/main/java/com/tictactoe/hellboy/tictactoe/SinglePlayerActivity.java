@@ -28,6 +28,9 @@ public class SinglePlayerActivity extends Activity {
     int turnCount = 0;
     Boolean there_is_a_winner = false;
     MiniMax miniMax;
+    // difficulty level
+    int diff_level;
+    double randFactor;
 
     // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
     Integer[][] board = new Integer[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
@@ -36,6 +39,23 @@ public class SinglePlayerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
+
+        final CharSequence[] difficulty = {"Easy", "Medium", "Hard", "Impossible"};
+        new AlertDialog.Builder(SinglePlayerActivity.this)
+                .setTitle("Select difficulty level")
+                .setSingleChoiceItems(difficulty,1, null)
+                .setCancelable(false)
+                .setNeutralButton("Done", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        diff_level = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+                    }
+                })
+                .show();
+
+
+        randFactor = Math.random();
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         TextView reload = (TextView) findViewById(R.id.reload);
@@ -87,7 +107,7 @@ public class SinglePlayerActivity extends Activity {
                     tmp.setClickable(false);
                     turnCount++;
                     turn = !turn;
-                    Point best;
+                    Point best = new Point(0, 0);
                     Point p = new Point(finalIndex/3, finalIndex%3);
                     board[finalIndex/3][finalIndex%3] = 1;
                     checkForWinner();
@@ -99,17 +119,34 @@ public class SinglePlayerActivity extends Activity {
                         /*
                         difficulty levels to be implemented here
                          */
-                        while(true){
-                            Random r = new Random();
-                            int x = r.nextInt(3);
-                            int y = r.nextInt(3);
-                            if(board[x][y] == -1){
-                                best = new Point(x, y);
+                        switch (diff_level){
+                            case 0:{
+                                best = EasyAI();
                                 break;
                             }
-
+                            case 1:{
+                                if(randFactor >= 0.5){
+                                    best = EasyAI();
+                                }
+                                else{
+                                    best = miniMax.setUserMove(p);
+                                }
+                                break;
+                            }
+                            case 2:{
+                                if(randFactor > 0.8){
+                                    best = EasyAI();
+                                }
+                                else{
+                                    best = miniMax.setUserMove(p);
+                                }
+                                break;
+                            }
+                            case 3:{
+                                best = miniMax.setUserMove(p);
+                                break;
+                            }
                         }
-                        //best = miniMax.setUserMove(p);
                         buttonClicked((Button)view, best.x , best.y);
                     }
                     else{
@@ -122,6 +159,18 @@ public class SinglePlayerActivity extends Activity {
             index++;
         }
 
+    }
+
+    public Point EasyAI(){
+        while(true){
+            Random r = new Random();
+            int x = r.nextInt(3);
+            int y = r.nextInt(3);
+            if(board[x][y] == -1){
+                return new Point(x, y);
+            }
+
+        }
     }
 
     public void buttonClicked(Button b, int x,int y){
@@ -216,6 +265,7 @@ public class SinglePlayerActivity extends Activity {
         }
         enableDisableAllButtons(true);
         miniMax = new MiniMax();
+        randFactor = Math.random();
 
     }
 
@@ -302,6 +352,7 @@ public class SinglePlayerActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+
         new AlertDialog.Builder(SinglePlayerActivity.this)
             .setTitle("Tic Tac Toe")
             .setMessage("Are you sure you want to quit the game?")
