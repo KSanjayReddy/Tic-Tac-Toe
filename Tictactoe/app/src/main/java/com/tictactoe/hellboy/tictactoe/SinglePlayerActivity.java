@@ -8,13 +8,12 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.Arrays;
 import java.util.Random;
 
@@ -42,9 +41,10 @@ public class SinglePlayerActivity extends Activity {
 
         final CharSequence[] difficulty = {"Easy", "Medium", "Hard", "Impossible"};
         new AlertDialog.Builder(SinglePlayerActivity.this)
-                .setTitle("Select difficulty level")
+                .setTitle("Select Difficulty Level")
                 .setSingleChoiceItems(difficulty,1, null)
                 .setCancelable(false)
+                .setIcon(R.drawable.index)
                 .setNeutralButton("Done", new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -319,7 +319,7 @@ public class SinglePlayerActivity extends Activity {
         if(ss.equals("W")){
             String s = "YOU WON";
             t.setText(s);
-            t.setTextColor(Color.parseColor("#006400"));
+            t.setTextColor(Color.parseColor("#096409"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
             anim.setDuration(400);
             anim.setStartOffset(20);
@@ -340,7 +340,7 @@ public class SinglePlayerActivity extends Activity {
         }
         else{
             t.setText("Match Drawn");
-            t.setTextColor(Color.parseColor("#decb00"));
+            t.setTextColor(Color.parseColor("#800000"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
             anim.setDuration(400);
             anim.setStartOffset(20);

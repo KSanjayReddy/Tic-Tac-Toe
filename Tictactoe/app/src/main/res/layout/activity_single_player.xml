@@ -46,7 +46,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="10dp">
             <TextView
                 android:background="#96005494"
                 android:id="@+id/you_score"
@@ -141,7 +141,7 @@
         <TextView
             android:gravity="center_horizontal"
             android:id="@+id/win_lose_msg"
-            android:textSize="26sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:text=""
             android:layout_marginBottom="20dp"

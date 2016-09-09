@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -214,7 +216,7 @@ public class TwoPlayerActivity extends Activity{
 
     private void updateScorex(int x){
         TextView t;
-        t = (TextView) findViewById(R.id.you_name);
+        t = (TextView) findViewById(R.id.scorex);
         String s="";
         t.setText(s+x);
     }
@@ -242,11 +244,23 @@ public class TwoPlayerActivity extends Activity{
             t.setText(s);
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
+            Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setDuration(400);
+            anim.setStartOffset(20);
+            anim.setRepeatMode(Animation.REVERSE);
+            anim.setRepeatCount(Animation.INFINITE);
+            t.startAnimation(anim);
         }
         else{
             t.setText("Match Drawn");
             t.setTextColor(Color.parseColor("#006400"));
             t.setTypeface(null, Typeface.BOLD);
+            Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setDuration(400);
+            anim.setStartOffset(20);
+            anim.setRepeatMode(Animation.REVERSE);
+            anim.setRepeatCount(Animation.INFINITE);
+            t.startAnimation(anim);
         }
         r= (TextView) findViewById(R.id.ng);
         r.setBackgroundColor(Color.parseColor("#006400"));
