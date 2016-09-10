@@ -1,14 +1,17 @@
 package com.tictactoe.hellboy.tictactoe;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -235,6 +238,34 @@ public class SinglePlayerActivity extends Activity {
         }
     }
 
+    private Cursor getScores(){
+        Score.SinglePlayerScoreHelper scoreHelper = new Score.SinglePlayerScoreHelper(this);
+        SQLiteDatabase db = scoreHelper.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery
+                ("SELECT * FROM " + Score.SinglePlayerScoreParams.TABLE_NAME, null);
+        return cursor;
+    }
+
+    private void updateScoreDB(){
+        Score.SinglePlayerScoreHelper scoreHelper = new Score.SinglePlayerScoreHelper(this);
+        SQLiteDatabase db = scoreHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        TextView score = (TextView) findViewById(R.id.comp_score);
+        if(score != null)
+            contentValues.put(
+                    Score.SinglePlayerScoreParams.AI_SCORE,
+                    Integer.parseInt(score.getText().toString()));
+        score = (TextView) findViewById(R.id.you_score);
+        if(score != null)
+            contentValues.put(
+                    Score.SinglePlayerScoreParams.USER_SCORE,
+                    Integer.parseInt(score.getText().toString()));
+
+        db.insert(Score.SinglePlayerScoreParams.TABLE_NAME, null, contentValues);
+    }
+
     public void reset_game(View view){
         new AlertDialog.Builder(SinglePlayerActivity.this)
             .setTitle("Tic Tac Toe")
@@ -243,6 +274,7 @@ public class SinglePlayerActivity extends Activity {
             {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    updateScoreDB();
                     Intent i;
                     i = new Intent(SinglePlayerActivity.this,SinglePlayerActivity.class);
                     startActivity(i);
@@ -270,7 +302,18 @@ public class SinglePlayerActivity extends Activity {
     }
 
     public void view_history(View view){
-        // to be added soon
+        Cursor cursor = getScores();
+        while (cursor.moveToNext()){
+            int a = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(Score.SinglePlayerScoreParams.USER_SCORE)
+            );
+            int b = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(Score.SinglePlayerScoreParams.AI_SCORE)
+            );
+            System.out.println(a + " user");
+            System.out.println(b + " ai");
+        }
+
     }
 
     /**
@@ -360,6 +403,7 @@ public class SinglePlayerActivity extends Activity {
             {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    updateScoreDB();
                     Intent i;
                     i = new Intent(SinglePlayerActivity.this,MainActivity.class);
                     startActivity(i);
