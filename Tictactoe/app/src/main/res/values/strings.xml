@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">Tictactoe</string>
-    <string name="algo"></string>
+    <string name="history">History</string>
     <string name="his"></string>
     <string name="two_players">Enter Player Names</string>
     <string name="reload_icon">&#xf021;</string>
     <string name="new_game_icon">&#xf055;</string>
     <string name="history_icon">&#xf03a;</string>
+    <string name="delete_icon">&#xf1f8;</string>
+    <string name="title_activity_history">History</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

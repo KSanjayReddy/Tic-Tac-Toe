@@ -12,15 +12,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
-<<<<<<< HEAD
 import android.support.v7.view.ContextThemeWrapper;
-=======
->>>>>>> 4a5ee412941a74f96bf95bbd2304dcbe31d3b63b
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -242,32 +241,26 @@ public class SinglePlayerActivity extends Activity {
         }
     }
 
-    private Cursor getScores(){
-        Score.SinglePlayerScoreHelper scoreHelper = new Score.SinglePlayerScoreHelper(this);
-        SQLiteDatabase db = scoreHelper.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery
-                ("SELECT * FROM " + Score.SinglePlayerScoreParams.TABLE_NAME, null);
-        return cursor;
-    }
 
     private void updateScoreDB(){
         Score.SinglePlayerScoreHelper scoreHelper = new Score.SinglePlayerScoreHelper(this);
         SQLiteDatabase db = scoreHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        TextView score = (TextView) findViewById(R.id.comp_score);
-        if(score != null)
+        TextView Cscore = (TextView) findViewById(R.id.comp_score);
+        if(Cscore != null)
             contentValues.put(
                     Score.SinglePlayerScoreParams.AI_SCORE,
-                    Integer.parseInt(score.getText().toString()));
-        score = (TextView) findViewById(R.id.you_score);
-        if(score != null)
+                    Integer.parseInt(Cscore.getText().toString()));
+        TextView Uscore = (TextView) findViewById(R.id.you_score);
+        if(Uscore != null)
             contentValues.put(
                     Score.SinglePlayerScoreParams.USER_SCORE,
-                    Integer.parseInt(score.getText().toString()));
-
-        db.insert(Score.SinglePlayerScoreParams.TABLE_NAME, null, contentValues);
+                    Integer.parseInt(Uscore.getText().toString()));
+        // update if only a game has been played
+        if(!Uscore.getText().toString().equals("0") || !Cscore.getText().toString().equals("0")) {
+            db.insert(Score.SinglePlayerScoreParams.TABLE_NAME, null, contentValues);
+        }
     }
 
     public void reset_game(View view){
@@ -306,17 +299,8 @@ public class SinglePlayerActivity extends Activity {
     }
 
     public void view_history(View view){
-        Cursor cursor = getScores();
-        while (cursor.moveToNext()){
-            int a = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(Score.SinglePlayerScoreParams.USER_SCORE)
-            );
-            int b = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(Score.SinglePlayerScoreParams.AI_SCORE)
-            );
-            System.out.println(a + " user");
-            System.out.println(b + " ai");
-        }
+        Intent intent = new Intent(this, History.class);
+        startActivity(intent);
 
     }
 

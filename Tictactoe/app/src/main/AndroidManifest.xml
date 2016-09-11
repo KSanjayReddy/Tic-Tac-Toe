@@ -19,7 +19,11 @@
         <activity android:name=".TwoPlayerSetup" />
         <activity android:name=".TwoPlayerActivity" />
         <activity android:name=".SinglePlayerActivity" />
-        <activity android:name=".Rules"></activity>
+        <activity android:name=".Rules" />
+        <activity
+            android:name=".History"
+            android:label="@string/title_activity_history"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
