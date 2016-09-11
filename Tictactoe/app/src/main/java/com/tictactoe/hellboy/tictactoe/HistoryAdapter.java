@@ -64,7 +64,7 @@ public class HistoryAdapter extends BaseAdapter {
         viewHolder.p1name.setText(scoreSetup.getPlayer1_name());
         viewHolder.p1score.setText(scoreSetup.getPlayer1_score());
         viewHolder.p2name.setText(scoreSetup.getPlayer2_name());
-        viewHolder.p2score.setText(scoreSetup.getPlayer1_score());
+        viewHolder.p2score.setText(scoreSetup.getPlayer2_score());
 
         return view;
     }

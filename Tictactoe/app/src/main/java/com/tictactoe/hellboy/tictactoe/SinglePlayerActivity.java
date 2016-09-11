@@ -252,6 +252,7 @@ public class SinglePlayerActivity extends Activity {
             contentValues.put(
                     Score.SinglePlayerScoreParams.AI_SCORE,
                     Integer.parseInt(Cscore.getText().toString()));
+
         TextView Uscore = (TextView) findViewById(R.id.you_score);
         if(Uscore != null)
             contentValues.put(
