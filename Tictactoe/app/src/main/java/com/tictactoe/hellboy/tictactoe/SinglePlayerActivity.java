@@ -10,12 +10,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
-<<<<<<< HEAD
-import android.support.v7.view.ContextThemeWrapper;
-=======
->>>>>>> 4a5ee412941a74f96bf95bbd2304dcbe31d3b63b
+//>>>>>>> 4a5ee412941a74f96bf95bbd2304dcbe31d3b63b
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
