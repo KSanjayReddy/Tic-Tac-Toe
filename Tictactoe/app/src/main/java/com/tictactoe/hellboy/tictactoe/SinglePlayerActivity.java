@@ -301,6 +301,7 @@ public class SinglePlayerActivity extends Activity {
 
     public void view_history(View view){
         Intent intent = new Intent(this, History.class);
+        intent.putExtra("Game", true);
         startActivity(intent);
 
     }
