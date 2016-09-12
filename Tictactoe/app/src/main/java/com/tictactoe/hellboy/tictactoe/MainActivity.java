@@ -23,7 +23,6 @@ public class MainActivity extends Activity {
         m.start();
         m.setVolume(0.5f, 0.5f);
 
-
         //MediaPlayer m = MediaPlayer.create(MainActivity.this,R.raw.track);
         //m.start();
 
@@ -66,6 +65,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, SinglePlayerActivity.class);
+                i.putExtra("player1_turn", true);
                 m.pause();
                 startActivity(i);
             }

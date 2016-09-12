@@ -33,6 +33,7 @@ public class SinglePlayerActivity extends Activity {
     int turnCount = 0;
     Boolean there_is_a_winner = false;
     MiniMax miniMax;
+    boolean player1_should_start;
     // difficulty level
     int diff_level;
     double randFactor;
@@ -62,6 +63,9 @@ public class SinglePlayerActivity extends Activity {
 
         randFactor = Math.random();
 
+        Intent intent = getIntent();
+        player1_should_start = intent.getBooleanExtra("player1_turn", true);
+
         Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         TextView reload = (TextView) findViewById(R.id.reload);
         if (reload != null)
@@ -86,6 +90,7 @@ public class SinglePlayerActivity extends Activity {
 
         miniMax = new MiniMax();
 
+
         a1 = (Button) findViewById(R.id.a1);
         a2 = (Button) findViewById(R.id.a2);
         a3 = (Button) findViewById(R.id.a3);
@@ -99,6 +104,16 @@ public class SinglePlayerActivity extends Activity {
         barray = new Button[]{a1,a2,a3,b1,b2,b3,c1,c2,c3};
         int index = 0;
 
+        if(!player1_should_start){
+            Point point = EasyAI();
+            Point best = miniMax.setUserMove(point);
+            turnCount++;
+            Button button = barray[best.x * 3 + best.y];
+            System.out.println("best " + best.x * 3 + best.y);
+            button.setBackgroundResource(R.drawable.cross);
+            button.setClickable(false);
+        }
+
         for(final Button b: barray){
             // means for every button in barray
             final int finalIndex = index;
@@ -108,7 +123,10 @@ public class SinglePlayerActivity extends Activity {
                     final MediaPlayer mm = MediaPlayer.create(SinglePlayerActivity.this,R.raw.click);
                     mm.start();
                     Button tmp = (Button)view;
-                    tmp.setBackgroundResource(R.drawable.cross);
+                    if(player1_should_start)
+                        tmp.setBackgroundResource(R.drawable.cross2);
+                    else
+                        tmp.setBackgroundResource(R.drawable.circle);
                     tmp.setClickable(false);
                     turnCount++;
                     turn = !turn;
@@ -184,7 +202,10 @@ public class SinglePlayerActivity extends Activity {
         Button comChoice;
         b.setClickable(false);
         comChoice = findTheButton(x,y);
-        comChoice.setBackgroundResource(R.drawable.circle);
+        if(player1_should_start)
+            comChoice.setBackgroundResource(R.drawable.circle2);
+        else
+            comChoice.setBackgroundResource(R.drawable.cross);
         board[x][y] = 0;
         turnCount++;
         comChoice.setClickable(false);
@@ -274,6 +295,7 @@ public class SinglePlayerActivity extends Activity {
                     updateScoreDB();
                     Intent i;
                     i = new Intent(SinglePlayerActivity.this,SinglePlayerActivity.class);
+                    i.putExtra("player1_turn", !player1_should_start);
                     startActivity(i);
                 }
             })
@@ -295,6 +317,15 @@ public class SinglePlayerActivity extends Activity {
         enableDisableAllButtons(true);
         miniMax = new MiniMax();
         randFactor = Math.random();
+        player1_should_start = !player1_should_start;
+        if(!player1_should_start){
+            Point best = EasyAI();
+            turnCount++;
+            Button button = barray[best.x * 3 + best.y];
+            System.out.println("best " + best.x * 3 + best.y);
+            button.setBackgroundResource(R.drawable.cross);
+            button.setClickable(false);
+        }
 
     }
 
