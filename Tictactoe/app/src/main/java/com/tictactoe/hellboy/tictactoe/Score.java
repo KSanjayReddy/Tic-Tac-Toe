@@ -14,7 +14,7 @@ public final class Score{
 
     public class SinglePlayerScoreParams implements BaseColumns {
         public static final int DB_VERSION = 1;
-        public static final String DB_NAME = "Score.db";
+        public static final String DB_NAME = "1Score.db";
 
         public static final String TABLE_NAME = "SinglePlayer";
         public static final String AI_SCORE = "AI_Score";
@@ -58,7 +58,7 @@ public final class Score{
 
     public class TwoPlayerScoreParams implements BaseColumns {
         public static final int DB_VERSION = 1;
-        public static final String DB_NAME = "Score.db";
+        public static final String DB_NAME = "2Score.db";
 
         public static final String TABLE_NAME = "TwoPlayer";
         public static final String P1_Name = "P1_Name";

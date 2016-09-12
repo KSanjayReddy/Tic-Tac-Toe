@@ -44,7 +44,6 @@ public class SinglePlayerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
-
         final CharSequence[] difficulty = {"Easy", "Medium", "Hard", "Impossible"};
         new AlertDialog.Builder(SinglePlayerActivity.this)
                 .setTitle("Select Difficulty Level")
