@@ -41,7 +41,7 @@ public class History extends AppCompatActivity {
     }
 
     private void getTwoPlayerScores() {
-        Score.SinglePlayerScoreHelper scoreHelper = new Score.SinglePlayerScoreHelper(this);
+        Score.TwoPlayerScoreHelper scoreHelper = new Score.TwoPlayerScoreHelper(this);
         SQLiteDatabase db = scoreHelper.getWritableDatabase();
 
         Cursor cursor = db.rawQuery

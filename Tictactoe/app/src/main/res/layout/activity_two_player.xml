@@ -4,84 +4,149 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/board"
-    tools:context=".TwoPlayerActivity"
-    android:orientation="vertical">
+    tools:context=".SinglePlayerActivity">
 
     <LinearLayout
+        android:layout_marginTop="2dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:background="#96005494"
-                android:id="@+id/namex"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:paddingLeft="35dp"
-                android:text="player1"
-                android:textSize="30sp"/>
-            <TextView
-                android:background="#96e11c1c"
-                android:id="@+id/namey"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textColor="#ffffff"
-                android:paddingRight="35dp"
-                android:textAlignment="textEnd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="player2"
-                android:textSize="30sp"/>
-        </LinearLayout>
-
-        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="00dp">
             <TextView
                 android:background="#96005494"
-                android:id="@+id/scorex"
+                android:id="@+id/Tplayer1_name"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
+                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="0"
+                android:text="Player1"
                 android:textSize="38sp"/>
+
             <TextView
                 android:background="#96e11c1c"
-                android:id="@+id/scorey"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textColor="#ffffff"
-                android:textAlignment="center"
+                android:id="@+id/Tplayer2_name"
                 android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:text="0"
+                android:text="Player2"
                 android:textSize="38sp"/>
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:background="#96005494"
+                android:id="@+id/Tplayer1_score"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="38sp"/>
 
             <TextView
-                android:id="@+id/whoseTurn"
-                android:layout_width="match_parent"
+                android:background="#96e11c1c"
+                android:id="@+id/Tplayer2_score"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:textColor="#0e0834"
-                android:gravity="center"
-                android:layout_marginBottom="30dp"/>
+                android:text="0"
+                android:textSize="38sp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|bottom">
+            <TextView
+                android:background="#d6f96969"
+                android:clickable="true"
+                android:onClick="reset_game"
+                android:textSize="34sp"
+                android:padding="12dp"
+                android:textColor="#ece5e5"
+                android:id="@+id/reload"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/reload_icon"/>
+            <TextView
+                android:visibility="invisible"
+                android:clickable="false"
+                android:textSize="12sp"
+                android:padding="1dp"
+                android:textColor="#ece5e5"
+                android:layout_weight="0.05"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/reload_icon"/>
+            <TextView
+                android:background="#d6028f09"
+                android:clickable="true"
+                android:onClick="request_more_games"
+                android:textSize="34sp"
+                android:padding="12dp"
+                android:textColor="#ece5e5"
+                android:id="@+id/new_game"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/new_game_icon"/>
+            <TextView
+                android:visibility="invisible"
+                android:clickable="false"
+                android:textSize="12sp"
+                android:padding="1dp"
+                android:textColor="#ece5e5"
+                android:layout_weight="0.05"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/reload_icon"/>
+            <TextView
+                android:background="#f4c7ae07"
+                android:clickable="true"
+                android:onClick="view_history"
+                android:textSize="34sp"
+                android:padding="12dp"
+                android:textColor="#ece5e5"
+                android:id="@+id/history"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/history_icon"/>
 
         </LinearLayout>
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:id="@+id/win_lose_msg"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text=""
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -203,7 +268,9 @@
                         />
 
                 </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
-        </LinearLayout>
+    </LinearLayout>
 </ScrollView>
