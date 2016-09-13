@@ -8,21 +8,22 @@ import java.util.Scanner;
 
 
 /**
+ *
  * Created by hellboy on 29/8/16.
  */
- public class MiniMax {
+public class MiniMax {
 
     Point userMove;
     int tmp;
     Board b = new Board();
     Random rand = new Random();
 
-    public Point setUserMove(Point p){
+    public Point setUserMove(Point p) {
         userMove = p;
-        b.placeAMove(userMove,2);
+        b.placeAMove(userMove, 2);
         b.callMinimax(0, 1);
         b.placeAMove(b.returnBestMove(), 1);
-        return  b.returnBestMove();
+        return b.returnBestMove();
     }
 }
 
@@ -150,7 +151,7 @@ class Board {
 
     List<PointsAndScores> rootsChildrenScores;
 
-    public void callMinimax(int depth, int turn){
+    public void callMinimax(int depth, int turn) {
         rootsChildrenScores = new ArrayList<>();
         minimax(depth, turn);
     }

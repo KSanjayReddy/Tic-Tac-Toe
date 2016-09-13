@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -23,27 +19,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class TwoPlayerActivity extends Activity {
 
     // All variables
-    Button a1,a2,a3,b1,b2,b3,c1,c2,c3;
+    Button a1, a2, a3, b1, b2, b3, c1, c2, c3;
     Button[] barray;
     String[][] array = new String[3][3];
     Boolean turn = true;   // X= true,you  O=false,com
     int turnCount = 0;
     Boolean there_is_a_winner = false;
-    MiniMax miniMax;
-    // difficulty level
-    int diff_level;
-    double randFactor;
     Boolean player_1_turn;
 
     // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
-    Integer[][] board = new Integer[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
+    Integer[][] board = new Integer[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,17 +73,16 @@ public class TwoPlayerActivity extends Activity {
                 .setTitle("Enter Player Names")
                 .setCancelable(false)
                 .setIcon(R.drawable.index)
-                .setPositiveButton("Done", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         TextView player1 = (TextView) findViewById(R.id.Tplayer1_name);
-                        if(p1name.getText().toString().length() > 0)
+                        if (p1name.getText().toString().length() > 0)
                             player1.setText(p1name.getText().toString());
                         else
                             player1.setText("Player 1");
                         TextView player2 = (TextView) findViewById(R.id.Tplayer2_name);
-                        if(p2name.getText().toString().length() > 0)
+                        if (p2name.getText().toString().length() > 0)
                             player2.setText(p2name.getText().toString());
                         else
                             player2.setText("Player 2");
@@ -110,10 +99,6 @@ public class TwoPlayerActivity extends Activity {
                 })
                 .show();
 
-        randFactor = Math.random();
-
-
-
         Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         TextView reload = (TextView) findViewById(R.id.reload);
         if (reload != null)
@@ -128,15 +113,12 @@ public class TwoPlayerActivity extends Activity {
             history.setTypeface(font);
 
         TextView score = (TextView) findViewById(R.id.Tplayer2_score);
-        if(score != null)
+        if (score != null)
             score.setText("0");
 
         score = (TextView) findViewById(R.id.Tplayer1_score);
-        if(score != null)
+        if (score != null)
             score.setText("0");
-
-
-        miniMax = new MiniMax();
 
         a1 = (Button) findViewById(R.id.a1);
         a2 = (Button) findViewById(R.id.a2);
@@ -148,39 +130,37 @@ public class TwoPlayerActivity extends Activity {
         c2 = (Button) findViewById(R.id.c2);
         c3 = (Button) findViewById(R.id.c3);
 
-        barray = new Button[]{a1,a2,a3,b1,b2,b3,c1,c2,c3};
+        barray = new Button[]{a1, a2, a3, b1, b2, b3, c1, c2, c3};
         int index = 0;
 
-        for(final Button b: barray){
+        for (final Button b : barray) {
             // means for every button in barray
             final int finalIndex = index;
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final MediaPlayer mm = MediaPlayer.create(TwoPlayerActivity.this,R.raw.click);
+                    final MediaPlayer mm = MediaPlayer.create(TwoPlayerActivity.this, R.raw.click);
                     mm.start();
-                    Button tmp = (Button)view;
+                    Button tmp = (Button) view;
                     // player 1 starts first
-                    if(player_1_turn) {
-                        if(turnCount%2 == 0) {
+                    if (player_1_turn) {
+                        if (turnCount % 2 == 0) {
                             tmp.setBackgroundResource(R.drawable.cross);
-                            board[finalIndex/3][finalIndex%3] = 1;
-                        }
-                        else {
+                            board[finalIndex / 3][finalIndex % 3] = 1;
+                        } else {
                             tmp.setBackgroundResource(R.drawable.circle);
-                            board[finalIndex/3][finalIndex%3] = 0;
+                            board[finalIndex / 3][finalIndex % 3] = 0;
                         }
                         tmp.setClickable(false);
                     }
                     //player 2 starts first
-                    else{
-                        if(turnCount%2 == 0) {
+                    else {
+                        if (turnCount % 2 == 0) {
                             tmp.setBackgroundResource(R.drawable.cross2);
-                            board[finalIndex/3][finalIndex%3] = 1;
-                        }
-                        else {
+                            board[finalIndex / 3][finalIndex % 3] = 1;
+                        } else {
                             tmp.setBackgroundResource(R.drawable.circle2);
-                            board[finalIndex/3][finalIndex%3] = 0;
+                            board[finalIndex / 3][finalIndex % 3] = 0;
                         }
                     }
                     turnCount++;
@@ -194,35 +174,35 @@ public class TwoPlayerActivity extends Activity {
 
     }
 
-    public Button findTheButton(int x,int y){
-        return Arrays.asList(barray).get(x* 3 + y);
+    public Button findTheButton(int x, int y) {
+        return Arrays.asList(barray).get(x * 3 + y);
     }
 
-    private void checkForWinner(){
+    private void checkForWinner() {
 
-        if(board[0][0].equals(board[0][1]) && board[0][1].equals(board[0][2]) && !board[0][0].equals(-1))
-            there_is_a_winner =true;
-        if(board[1][0].equals(board[1][1]) && board[1][1].equals(board[1][2]) && !board[1][0].equals(-1))
-            there_is_a_winner =true;
-        if(board[2][0].equals(board[2][1]) && board[2][1].equals(board[2][2]) && !board[2][0].equals(-1))
-            there_is_a_winner =true;
+        if (board[0][0].equals(board[0][1]) && board[0][1].equals(board[0][2]) && !board[0][0].equals(-1))
+            there_is_a_winner = true;
+        if (board[1][0].equals(board[1][1]) && board[1][1].equals(board[1][2]) && !board[1][0].equals(-1))
+            there_is_a_winner = true;
+        if (board[2][0].equals(board[2][1]) && board[2][1].equals(board[2][2]) && !board[2][0].equals(-1))
+            there_is_a_winner = true;
 
         // vertical
-        if(board[0][0].equals(board[1][0]) && board[1][0].equals(board[2][0]) && !board[0][0].equals(-1))
-            there_is_a_winner =true;
-        if(board[0][1].equals(board[1][1]) && board[1][1].equals(board[2][1]) && !board[0][1].equals(-1))
-            there_is_a_winner =true;
-        if(board[0][2].equals(board[1][2]) && board[1][2].equals(board[2][2]) && !board[0][2].equals(-1))
-            there_is_a_winner =true;
+        if (board[0][0].equals(board[1][0]) && board[1][0].equals(board[2][0]) && !board[0][0].equals(-1))
+            there_is_a_winner = true;
+        if (board[0][1].equals(board[1][1]) && board[1][1].equals(board[2][1]) && !board[0][1].equals(-1))
+            there_is_a_winner = true;
+        if (board[0][2].equals(board[1][2]) && board[1][2].equals(board[2][2]) && !board[0][2].equals(-1))
+            there_is_a_winner = true;
 
         //diagonals
-        if(board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(-1))
-            there_is_a_winner =true;
-        if(board[2][0].equals(board[1][1]) && board[1][1].equals(board[0][2]) && !board[0][2].equals(-1))
-            there_is_a_winner =true;
+        if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(-1))
+            there_is_a_winner = true;
+        if (board[2][0].equals(board[1][1]) && board[1][1].equals(board[0][2]) && !board[0][2].equals(-1))
+            there_is_a_winner = true;
 
-        if(there_is_a_winner){
-            if(player_1_turn) {
+        if (there_is_a_winner) {
+            if (player_1_turn) {
                 if (!turn) {
                     displayResult("W1");
                     updateScore(false);
@@ -231,8 +211,7 @@ public class TwoPlayerActivity extends Activity {
                     displayResult("W2");
                     updateScore(true);
                 }
-            }
-            else{
+            } else {
                 if (!turn) {
                     displayResult("W2");
                     updateScore(true);
@@ -246,7 +225,7 @@ public class TwoPlayerActivity extends Activity {
             return;
 
         }
-        if (turnCount == 9){
+        if (turnCount == 9) {
             displayResult("D");
             enableDisableAllButtons(false);
 
@@ -254,51 +233,50 @@ public class TwoPlayerActivity extends Activity {
     }
 
 
-    private void updateScoreDB(){
+    private void updateScoreDB() {
         Score.TwoPlayerScoreHelper scoreHelper = new Score.TwoPlayerScoreHelper(this);
         SQLiteDatabase db = scoreHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         TextView player1name = (TextView) findViewById(R.id.Tplayer1_name);
-        if(player1name != null)
+        if (player1name != null)
             contentValues.put(
                     Score.TwoPlayerScoreParams.P1_Name,
                     player1name.getText().toString());
 
         TextView player1score = (TextView) findViewById(R.id.Tplayer1_score);
-        if(player1score != null)
+        if (player1score != null)
             contentValues.put(
                     Score.TwoPlayerScoreParams.P1_SCORE,
                     Integer.parseInt(player1score.getText().toString()));
 
         TextView player2name = (TextView) findViewById(R.id.Tplayer2_name);
-        if(player2name != null)
+        if (player2name != null)
             contentValues.put(
                     Score.TwoPlayerScoreParams.P2_Name,
                     player2name.getText().toString());
 
         TextView player2score = (TextView) findViewById(R.id.Tplayer2_score);
-        if(player2score != null)
+        if (player2score != null)
             contentValues.put(
                     Score.TwoPlayerScoreParams.P2_SCORE,
                     Integer.parseInt(player2score.getText().toString()));
         // update if only a game has been played
-        if(!player1score.getText().toString().equals("0") || !player2score.getText().toString().equals("0")) {
+        if (!player1score.getText().toString().equals("0") || !player2score.getText().toString().equals("0")) {
             db.insert(Score.TwoPlayerScoreParams.TABLE_NAME, null, contentValues);
         }
     }
 
-    public void reset_game(View view){
+    public void reset_game(View view) {
         new AlertDialog.Builder(TwoPlayerActivity.this)
                 .setTitle("Tic Tac Toe")
                 .setMessage("Are you sure you want to reset the game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         updateScoreDB();
                         Intent i;
-                        i = new Intent(TwoPlayerActivity.this,TwoPlayerActivity.class);
+                        i = new Intent(TwoPlayerActivity.this, TwoPlayerActivity.class);
                         startActivity(i);
                     }
                 })
@@ -306,9 +284,9 @@ public class TwoPlayerActivity extends Activity {
                 .show();
     }
 
-    public void request_more_games(View view){
+    public void request_more_games(View view) {
         // handle result and draw cases
-        if(! there_is_a_winner && turnCount != 9){
+        if (!there_is_a_winner && turnCount != 9) {
             new AlertDialog.Builder(TwoPlayerActivity.this)
                     .setTitle("Tic Tac Toe")
                     .setMessage("Game in progress. Finish it before requesting a new one")
@@ -322,7 +300,7 @@ public class TwoPlayerActivity extends Activity {
 
     }
 
-    public void view_history(View view){
+    public void view_history(View view) {
         Intent intent = new Intent(this, History.class);
         intent.putExtra("Game", false);
         startActivity(intent);
@@ -330,20 +308,18 @@ public class TwoPlayerActivity extends Activity {
     }
 
     /**
-     * @param id
-     * true is for computer score
-     * false is for human score
+     * @param id true is for computer score
+     *           false is for human score
      */
-    private void updateScore(boolean id){
+    private void updateScore(boolean id) {
 
-        if(id){
+        if (id) {
             TextView score = (TextView) findViewById(R.id.Tplayer2_score);
-            if(score != null)
+            if (score != null)
                 score.setText(Integer.toString(Integer.parseInt(score.getText().toString()) + 1));
-        }
-        else{
+        } else {
             TextView score = (TextView) findViewById(R.id.Tplayer1_score);
-            if(score != null)
+            if (score != null)
                 score.setText(Integer.toString(Integer.parseInt(score.getText().toString()) + 1));
         }
     }
@@ -352,14 +328,14 @@ public class TwoPlayerActivity extends Activity {
      * @param value : false when to pause board after a game to make it view only
      *              : true to reset board
      */
-    private void enableDisableAllButtons(Boolean value){
-        for(Button b : barray){
+    private void enableDisableAllButtons(Boolean value) {
+        for (Button b : barray) {
             b.setClickable(value);
-            if(value)
+            if (value)
                 b.setBackgroundResource(R.drawable.gamebutton);
         }
         // reset board
-        if(value) {
+        if (value) {
             board = new Integer[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
             TextView t = (TextView) findViewById(R.id.win_lose_msg);
             t.setText("");
@@ -369,10 +345,10 @@ public class TwoPlayerActivity extends Activity {
         }
     }
 
-    private void displayResult(String ss){
+    private void displayResult(String ss) {
         TextView t;
         t = (TextView) findViewById(R.id.win_lose_msg);
-        if(ss.equals("W1")){
+        if (ss.equals("W1")) {
             TextView player1 = (TextView) findViewById(R.id.Tplayer1_name);
             String s = player1.getText().toString() + " WON";
             t.setText(s);
@@ -384,7 +360,7 @@ public class TwoPlayerActivity extends Activity {
             anim.setRepeatCount(Animation.INFINITE);
             t.startAnimation(anim);
 
-        }else if(ss.equals("W2")){
+        } else if (ss.equals("W2")) {
             TextView player2 = (TextView) findViewById(R.id.Tplayer2_name);
             String s = player2.getText().toString() + " WON";
             t.setText(s);
@@ -395,8 +371,7 @@ public class TwoPlayerActivity extends Activity {
             anim.setRepeatMode(Animation.REVERSE);
             anim.setRepeatCount(Animation.INFINITE);
             t.startAnimation(anim);
-        }
-        else{
+        } else {
             t.setText("Match Drawn");
             t.setTextColor(Color.parseColor("#800000"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
@@ -414,13 +389,12 @@ public class TwoPlayerActivity extends Activity {
         new AlertDialog.Builder(TwoPlayerActivity.this)
                 .setTitle("Tic Tac Toe")
                 .setMessage("Are you sure you want to quit the game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         updateScoreDB();
                         Intent i;
-                        i = new Intent(TwoPlayerActivity.this,MainActivity.class);
+                        i = new Intent(TwoPlayerActivity.this, MainActivity.class);
                         startActivity(i);
                     }
                 })

@@ -79,7 +79,7 @@ public class History extends AppCompatActivity {
 
         Intent intent = getIntent();
         boolean singlePlayerGame = intent.getBooleanExtra("Game", true);
-        if(singlePlayerGame)
+        if (singlePlayerGame)
             getSinglePlayerScores();
         else
             getTwoPlayerScores();

@@ -6,11 +6,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 /**
+ *
  * Created by anwesh on 9/7/16.
  */
-public final class Score{
+public final class Score {
 
-    private Score(){}
+    private Score() {
+    }
 
     public class SinglePlayerScoreParams implements BaseColumns {
         public static final int DB_VERSION = 1;
@@ -78,7 +80,6 @@ public final class Score{
         private static final String SQL_DELETE_ENTRIES =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
-
 
 
     public static class TwoPlayerScoreHelper extends SQLiteOpenHelper {

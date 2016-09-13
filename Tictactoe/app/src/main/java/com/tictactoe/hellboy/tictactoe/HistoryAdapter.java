@@ -1,20 +1,16 @@
 package com.tictactoe.hellboy.tictactoe;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
+ *
  * Created by anwesh on 9/9/16.
  */
 public class HistoryAdapter extends BaseAdapter {
@@ -22,7 +18,7 @@ public class HistoryAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<scoreSetup> scoreSetups;
 
-    public HistoryAdapter(ArrayList<scoreSetup> scoreSetups, Context context){
+    public HistoryAdapter(ArrayList<scoreSetup> scoreSetups, Context context) {
         this.scoreSetups = new ArrayList<>(scoreSetups);
         this.context = context;
     }
@@ -45,11 +41,10 @@ public class HistoryAdapter extends BaseAdapter {
     @Override
     public View getView(final int i, View _view, ViewGroup viewGroup) {
         View view = _view;
-        if(view == null) {
+        if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.adapter_history, null);
-        }
-        else{
+        } else {
             view = _view;
         }
         scoreSetup scoreSetup = scoreSetups.get(i);
