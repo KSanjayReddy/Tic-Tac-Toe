@@ -30,7 +30,8 @@ public class TwoPlayerActivity extends Activity {
     Boolean turn = true;   // X= true,you  O=false,com
     int turnCount = 0;
     Boolean there_is_a_winner = false;
-    Boolean player_1_turn;
+    Boolean player_1_starts_first;
+    String player1Name, player2Name;
 
     // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
     Integer[][] board = new Integer[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
@@ -66,7 +67,8 @@ public class TwoPlayerActivity extends Activity {
         nameLayout.addView(p2name);
 
         Intent intent = getIntent();
-        player_1_turn = intent.getBooleanExtra("player1_turn", true);
+        player_1_starts_first = intent.getBooleanExtra("player1_turn", true);
+
 
         new AlertDialog.Builder(TwoPlayerActivity.this)
                 .setView(nameLayout)
@@ -77,24 +79,32 @@ public class TwoPlayerActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         TextView player1 = (TextView) findViewById(R.id.Tplayer1_name);
-                        if (p1name.getText().toString().length() > 0)
-                            player1.setText(p1name.getText().toString());
-                        else
-                            player1.setText("Player 1");
+                        player1Name = p1name.getText().toString();
+                        if (player1Name.length() > 0)
+                            player1.setText(player1Name);
+                        else {
+                            player1Name = "Player 1";
+                            player1.setText(player1Name);
+                        }
                         TextView player2 = (TextView) findViewById(R.id.Tplayer2_name);
-                        if (p2name.getText().toString().length() > 0)
-                            player2.setText(p2name.getText().toString());
-                        else
-                            player2.setText("Player 2");
+                        player2Name = p2name.getText().toString();
+                        if (player2Name.length() > 0)
+                            player2.setText(player2Name);
+                        else {
+                            player2Name = "Player 2";
+                            player2.setText(player2Name);
+                        }
                     }
                 })
                 .setNegativeButton("Skip", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         TextView player1 = (TextView) findViewById(R.id.Tplayer1_name);
-                        player1.setText("Player 1");
+                        player1Name = "Player 1";
+                        player1.setText(player1Name);
                         TextView player2 = (TextView) findViewById(R.id.Tplayer2_name);
-                        player2.setText("Player 2");
+                        player2Name = "Player 2";
+                        player2.setText(player2Name);
                     }
                 })
                 .show();
@@ -143,26 +153,39 @@ public class TwoPlayerActivity extends Activity {
                     mm.start();
                     Button tmp = (Button) view;
                     // player 1 starts first
-                    if (player_1_turn) {
+                    if (player_1_starts_first) {
                         if (turnCount % 2 == 0) {
                             tmp.setBackgroundResource(R.drawable.cross);
                             board[finalIndex / 3][finalIndex % 3] = 1;
+                            TextView whoseTurn = (TextView) findViewById(R.id.win_lose_msg);
+                            String turn  = player1Name + "'s Turn";
+                            whoseTurn.setText(turn);
                         } else {
                             tmp.setBackgroundResource(R.drawable.circle);
                             board[finalIndex / 3][finalIndex % 3] = 0;
+                            TextView whoseTurn = (TextView) findViewById(R.id.win_lose_msg);
+                            String turn  = player2Name + "'s Turn";
+                            whoseTurn.setText(turn);
                         }
-                        tmp.setClickable(false);
                     }
                     //player 2 starts first
                     else {
                         if (turnCount % 2 == 0) {
                             tmp.setBackgroundResource(R.drawable.cross2);
                             board[finalIndex / 3][finalIndex % 3] = 1;
+                            TextView whoseTurn = (TextView) findViewById(R.id.win_lose_msg);
+                            String turn  = player2Name + "'s Turn";
+                            whoseTurn.setText(turn);
+
                         } else {
                             tmp.setBackgroundResource(R.drawable.circle2);
                             board[finalIndex / 3][finalIndex % 3] = 0;
+                            TextView whoseTurn = (TextView) findViewById(R.id.win_lose_msg);
+                            String turn  = player1Name + "'s Turn";
+                            whoseTurn.setText(turn);
                         }
                     }
+                    tmp.setClickable(false);
                     turnCount++;
                     checkForWinner();
                     turn = !turn;
@@ -202,7 +225,7 @@ public class TwoPlayerActivity extends Activity {
             there_is_a_winner = true;
 
         if (there_is_a_winner) {
-            if (player_1_turn) {
+            if (player_1_starts_first) {
                 if (!turn) {
                     displayResult("W1");
                     updateScore(false);
@@ -296,7 +319,7 @@ public class TwoPlayerActivity extends Activity {
             return;
         }
         enableDisableAllButtons(true);
-        player_1_turn = !player_1_turn;
+        player_1_starts_first = !player_1_starts_first;
 
     }
 
