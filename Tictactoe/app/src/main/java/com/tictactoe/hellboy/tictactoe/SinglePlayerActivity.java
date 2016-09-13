@@ -107,11 +107,8 @@ public class SinglePlayerActivity extends Activity {
         if(!player1_should_start){
             Point point = EasyAI();
             Point best = miniMax.setUserMove(point);
-            turnCount++;
             Button button = barray[best.x * 3 + best.y];
-            System.out.println("best " + best.x * 3 + best.y);
-            button.setBackgroundResource(R.drawable.cross);
-            button.setClickable(false);
+            buttonClicked(button, best.x, best.y);
         }
 
         for(final Button b: barray){
@@ -241,14 +238,25 @@ public class SinglePlayerActivity extends Activity {
             there_is_a_winner =true;
 
         if(there_is_a_winner){
-            if(!turn){
-                displayResult("W");
-                updateScore(false);
-                return;
+            if(player1_should_start) {
+                if (!turn) {
+                    displayResult("W");
+                    updateScore(false);
+                    return;
+                } else {
+                    displayResult("L");
+                    updateScore(true);
+                }
             }
             else{
-                displayResult("L");
-                updateScore(true);
+                if (!turn) {
+                    displayResult("L");
+                    updateScore(true);
+                    return;
+                } else {
+                    displayResult("W");
+                    updateScore(false);
+                }
             }
             enableDisableAllButtons(false);
             return;
@@ -320,11 +328,8 @@ public class SinglePlayerActivity extends Activity {
         player1_should_start = !player1_should_start;
         if(!player1_should_start){
             Point best = EasyAI();
-            turnCount++;
             Button button = barray[best.x * 3 + best.y];
-            System.out.println("best " + best.x * 3 + best.y);
-            button.setBackgroundResource(R.drawable.cross);
-            button.setClickable(false);
+            buttonClicked(button, best.x, best.y);
         }
 
     }

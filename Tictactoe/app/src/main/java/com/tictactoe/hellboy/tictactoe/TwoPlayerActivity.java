@@ -40,6 +40,7 @@ public class TwoPlayerActivity extends Activity {
     // difficulty level
     int diff_level;
     double randFactor;
+    Boolean player_1_turn;
 
     // integer array representing board, -1 = unfilled, 0 = circle, 1 = cross
     Integer[][] board = new Integer[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
@@ -73,6 +74,9 @@ public class TwoPlayerActivity extends Activity {
         nameLayout.addView(p1name);
         nameLayout.addView(p3name);
         nameLayout.addView(p2name);
+
+        Intent intent = getIntent();
+        player_1_turn = intent.getBooleanExtra("player1_turn", true);
 
         new AlertDialog.Builder(TwoPlayerActivity.this)
                 .setView(nameLayout)
@@ -156,88 +160,38 @@ public class TwoPlayerActivity extends Activity {
                     final MediaPlayer mm = MediaPlayer.create(TwoPlayerActivity.this,R.raw.click);
                     mm.start();
                     Button tmp = (Button)view;
-                    tmp.setBackgroundResource(R.drawable.cross);
-                    tmp.setClickable(false);
-                    turnCount++;
-                    turn = !turn;
-                    Point best = new Point(0, 0);
-                    Point p = new Point(finalIndex/3, finalIndex%3);
-                    board[finalIndex/3][finalIndex%3] = 1;
-                    checkForWinner();
-
-                    if(there_is_a_winner)
-                        return;
-
-                    if(turnCount != 9){
-                        /*
-                        difficulty levels to be implemented here
-                         */
-                        switch (diff_level){
-                            case 0:{
-                                best = EasyAI();
-                                break;
-                            }
-                            case 1:{
-                                if(randFactor >= 0.5){
-                                    best = EasyAI();
-                                }
-                                else{
-                                    best = miniMax.setUserMove(p);
-                                }
-                                break;
-                            }
-                            case 2:{
-                                if(randFactor > 0.8){
-                                    best = EasyAI();
-                                }
-                                else{
-                                    best = miniMax.setUserMove(p);
-                                }
-                                break;
-                            }
-                            case 3:{
-                                best = miniMax.setUserMove(p);
-                                break;
-                            }
+                    // player 1 starts first
+                    if(player_1_turn) {
+                        if(turnCount%2 == 0) {
+                            tmp.setBackgroundResource(R.drawable.cross);
+                            board[finalIndex/3][finalIndex%3] = 1;
                         }
-                        buttonClicked((Button)view, best.x , best.y);
+                        else {
+                            tmp.setBackgroundResource(R.drawable.circle);
+                            board[finalIndex/3][finalIndex%3] = 0;
+                        }
+                        tmp.setClickable(false);
                     }
+                    //player 2 starts first
                     else{
-                        checkForWinner();
+                        if(turnCount%2 == 0) {
+                            tmp.setBackgroundResource(R.drawable.cross2);
+                            board[finalIndex/3][finalIndex%3] = 1;
+                        }
+                        else {
+                            tmp.setBackgroundResource(R.drawable.circle2);
+                            board[finalIndex/3][finalIndex%3] = 0;
+                        }
                     }
-
+                    turnCount++;
+                    checkForWinner();
+                    turn = !turn;
                     //Toast.makeText(TwoPlayerActivity.this,"best move"+best.x+" "+best.y,Toast.LENGTH_SHORT).show();
                 }
             });
             index++;
         }
 
-    }
-
-    public Point EasyAI(){
-        while(true){
-            Random r = new Random();
-            int x = r.nextInt(3);
-            int y = r.nextInt(3);
-            if(board[x][y] == -1){
-                return new Point(x, y);
-            }
-
-        }
-    }
-
-    public void buttonClicked(Button b, int x,int y){
-
-        //Toast.makeText(TwoPlayerActivity.this, "count"+turnCount,Toast.LENGTH_SHORT).show();
-        Button comChoice;
-        b.setClickable(false);
-        comChoice = findTheButton(x,y);
-        comChoice.setBackgroundResource(R.drawable.circle);
-        board[x][y] = 0;
-        turnCount++;
-        comChoice.setClickable(false);
-        turn = !turn;
-        checkForWinner();
     }
 
     public Button findTheButton(int x,int y){
@@ -268,14 +222,25 @@ public class TwoPlayerActivity extends Activity {
             there_is_a_winner =true;
 
         if(there_is_a_winner){
-            if(!turn){
-                displayResult("W");
-                updateScore(false);
-                return;
+            if(player_1_turn) {
+                if (!turn) {
+                    displayResult("W1");
+                    updateScore(false);
+                    return;
+                } else {
+                    displayResult("W2");
+                    updateScore(true);
+                }
             }
             else{
-                displayResult("L");
-                updateScore(true);
+                if (!turn) {
+                    displayResult("W2");
+                    updateScore(true);
+                    return;
+                } else {
+                    displayResult("W1");
+                    updateScore(false);
+                }
             }
             enableDisableAllButtons(false);
             return;
@@ -353,8 +318,7 @@ public class TwoPlayerActivity extends Activity {
             return;
         }
         enableDisableAllButtons(true);
-        miniMax = new MiniMax();
-        randFactor = Math.random();
+        player_1_turn = !player_1_turn;
 
     }
 
@@ -408,8 +372,9 @@ public class TwoPlayerActivity extends Activity {
     private void displayResult(String ss){
         TextView t;
         t = (TextView) findViewById(R.id.win_lose_msg);
-        if(ss.equals("W")){
-            String s = "YOU WON";
+        if(ss.equals("W1")){
+            TextView player1 = (TextView) findViewById(R.id.Tplayer1_name);
+            String s = player1.getText().toString() + " WON";
             t.setText(s);
             t.setTextColor(Color.parseColor("#096409"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
@@ -419,10 +384,11 @@ public class TwoPlayerActivity extends Activity {
             anim.setRepeatCount(Animation.INFINITE);
             t.startAnimation(anim);
 
-        }else if(ss.equals("L")){
-            String s = "YOU LOSE";
+        }else if(ss.equals("W2")){
+            TextView player2 = (TextView) findViewById(R.id.Tplayer2_name);
+            String s = player2.getText().toString() + " WON";
             t.setText(s);
-            t.setTextColor(Color.parseColor("#ee0000"));
+            t.setTextColor(Color.parseColor("#096409"));
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
             anim.setDuration(400);
             anim.setStartOffset(20);

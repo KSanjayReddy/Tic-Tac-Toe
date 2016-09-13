@@ -30,7 +30,8 @@ public class MainActivity extends Activity {
         twoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, TwoPlayerSetup.class);
+                Intent i = new Intent(MainActivity.this, TwoPlayerActivity.class);
+                i.putExtra("player1_turn", true);
                 m.pause();
                 startActivity(i);
             }
