@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
         r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Rules.class);
+                Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                 m.pause();
                 startActivity(i);
             }
